@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 
 const DONATION_URL =
-  process.env.NEXT_PUBLIC_STRIPE_DONATION_URL || "#donate";
+  process.env.NEXT_PUBLIC_STRIPE_DONATION_URL || "https://donate.stripe.com/dR615Z1P6eHrg6c000";
 
 function GradientButton({
   children,

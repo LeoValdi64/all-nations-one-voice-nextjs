@@ -9,7 +9,7 @@ import NewsletterForm from "@/components/ui/newsletter-form";
 import { SponsorsSection } from "@/components/sections/sponsors-section";
 
 const DONATION_URL =
-  process.env.NEXT_PUBLIC_STRIPE_DONATION_URL || "#donate";
+  process.env.NEXT_PUBLIC_STRIPE_DONATION_URL || "https://donate.stripe.com/dR615Z1P6eHrg6c000";
 
 export default function OngLayout({
   children,
