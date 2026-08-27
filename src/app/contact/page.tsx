@@ -42,6 +42,7 @@ export default async function ContactPage() {
   const content = await getPublicContent();
   const mailto = `${SITE.emailHref}?subject=${encodeURIComponent("Message from the website")}`;
   const facebook = content.links.facebook || SITE.facebook;
+  const instagram = content.links.instagram || SITE.instagram;
   const donationUrl = content.links.donation || SITE.donationUrl;
   const mapsUrl = content.links.maps || SITE.mapsShare;
 
@@ -110,6 +111,11 @@ export default async function ContactPage() {
                   </Button>
                   <Button asChild size="lg" variant="outline" className="h-12">
                     <a href={SITE.phoneHref}>Call {SITE.phone}</a>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="h-12">
+                    <a href={instagram} target="_blank" rel="noopener noreferrer">
+                      Instagram
+                    </a>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="h-12">
                     <a href={facebook} target="_blank" rel="noopener noreferrer">

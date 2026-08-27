@@ -469,6 +469,19 @@ export function AdminDashboard({
                     />
                   </Field>
                   <Field>
+                    <FieldLabel htmlFor="instagram">Instagram URL</FieldLabel>
+                    <Input
+                      id="instagram"
+                      value={content.links.instagram}
+                      onChange={(event) =>
+                        setContent({
+                          ...content,
+                          links: { ...content.links, instagram: event.target.value },
+                        })
+                      }
+                    />
+                  </Field>
+                  <Field>
                     <FieldLabel htmlFor="maps">Maps URL</FieldLabel>
                     <Input
                       id="maps"

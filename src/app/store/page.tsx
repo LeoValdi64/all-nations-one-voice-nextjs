@@ -60,6 +60,7 @@ export default async function StorePage() {
             hours={content.storeHours}
             mapsUrl={content.links.maps || SITE.mapsShare}
             facebook={content.links.facebook || SITE.facebook}
+            instagram={content.links.instagram || SITE.instagram}
           />
 
           <div className="flex flex-col gap-12 lg:col-start-1 lg:row-start-1">

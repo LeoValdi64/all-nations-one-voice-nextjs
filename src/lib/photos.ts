@@ -14,6 +14,8 @@ const GRAPHIC_IDS = new Set([
 ]);
 
 const PREFERRED_HERO_IDS = [
+  "anv-2026-06-aisle",
+  "anv-2026-05-red-gown",
   "fbid-122152091984883611",
   "fbid-122152092014883611",
   "fbid-122151137870883611",

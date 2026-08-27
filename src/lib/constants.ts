@@ -10,6 +10,7 @@ export const SITE = {
   phoneHref: "tel:+12532355057",
   emailHref: "mailto:administration@allnationsonevoice.org",
   facebook: "https://www.facebook.com/profile.php?id=61576508330685",
+  instagram: "https://www.instagram.com/found.it.thrift.store/",
   mapsShare: "https://share.google/eTxOIDHxCbYp9ZLFe",
   mapsEmbed:
     "https://maps.google.com/maps?q=34303%20Pacific%20Hwy%20S%20Ste%20120%20Federal%20Way%20WA%2098003&z=16&output=embed",
