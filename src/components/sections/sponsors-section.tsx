@@ -1,5 +1,3 @@
-import React from "react";
-
 const sponsors = [
   {
     id: 1,
@@ -57,58 +55,32 @@ const sponsors = [
   },
 ];
 
-const firstRow = sponsors.slice(0, 4);
-const secondRow = sponsors.slice(4);
-
 export function SponsorsSection() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
+    <section className="bg-muted/40 px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Our Sponsors
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-            Organizations and institutions that support our global mission.
+          <h2 className="font-heading text-3xl font-semibold tracking-tight">Our sponsors</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+            Neighbors and businesses who help this work stay open.
           </p>
         </div>
-
-        <div className="mt-16 flex flex-col items-center space-y-16">
-          <div className="flex flex-wrap justify-center gap-16 w-full">
-            {firstRow.map((s) => (
-              <a
-                key={s.id}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
-              >
-                <img
-                  src={s.image}
-                  alt={s.name}
-                  className="max-h-40 max-w-full object-contain"
-                />
-              </a>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-16 w-full">
-            {secondRow.map((s) => (
-              <a
-                key={s.id}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
-              >
-                <img
-                  src={s.image}
-                  alt={s.name}
-                  className="max-h-40 max-w-full object-contain"
-                />
-              </a>
-            ))}
-          </div>
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-10">
+          {sponsors.map((sponsor) => (
+            <a
+              key={sponsor.id}
+              href={sponsor.url}
+              target={sponsor.url === "#" ? undefined : "_blank"}
+              rel={sponsor.url === "#" ? undefined : "noopener noreferrer"}
+              className="transition-transform hover:scale-105"
+            >
+              <img
+                src={sponsor.image}
+                alt={sponsor.name}
+                className="max-h-28 w-auto object-contain"
+              />
+            </a>
+          ))}
         </div>
       </div>
     </section>

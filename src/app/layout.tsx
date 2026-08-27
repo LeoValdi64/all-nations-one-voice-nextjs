@@ -1,25 +1,31 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+
 export const metadata: Metadata = {
-  title: "All Nation One Voice | Uniting cultures, building peace",
+  metadataBase: new URL("https://allnationsonevoice.org"),
+  title: "All Nations One Voice | Federal Way nonprofit",
   description:
-    "We are a global community working for unity and understanding among all cultures and nations.",
+    "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way, Washington.",
   keywords:
-    "NGO, global community, unity, peace, cultures, nations, education, job training, support",
+    "All Nations One Voice, FOUND IT Thrift Store, Federal Way, job search help, nonprofit, thrift store",
   openGraph: {
-    title: "All Nation One Voice",
+    title: "All Nations One Voice",
     description:
-      "We are a global community working for unity and understanding among all cultures and nations.",
+      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way.",
     type: "website",
     url: "https://allnationsonevoice.org",
-    images: [{ url: "/images/og-image.jpg" }],
+    images: [{ url: "/images/logo1.webp" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "All Nation One Voice",
+    title: "All Nations One Voice",
     description:
-      "We are a global community working for unity and understanding among all cultures and nations.",
+      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way.",
   },
   icons: { icon: "/favicon.ico" },
 };
@@ -30,17 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <head>
         <link rel="canonical" href="https://allnationsonevoice.org" />
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link
-          href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700"
-          rel="stylesheet"
-        />
       </head>
-      <body className="min-h-screen bg-white text-slate-700 font-sans antialiased">
+      <body className="min-h-screen bg-background text-foreground antialiased">
         {children}
+        <Toaster />
       </body>
     </html>
   );
