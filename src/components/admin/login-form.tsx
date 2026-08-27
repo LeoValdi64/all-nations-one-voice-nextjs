@@ -36,7 +36,7 @@ export function LoginForm({ configured, failed = false }: { configured: boolean;
           <SiteMark href="/" compact />
           <div className="flex flex-col gap-1.5">
             <CardTitle className="font-heading text-2xl">
-              <h1 className="font-heading text-2xl font-medium">{SITE.name} admin</h1>
+              <h1 className="font-heading text-2xl font-medium leading-tight">{SITE.name} admin</h1>
             </CardTitle>
             <CardDescription>
               Edit website copy, store photos, classes, and registrations.

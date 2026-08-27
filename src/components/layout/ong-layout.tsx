@@ -14,8 +14,14 @@ export default async function OngLayout({
   const content = await getSiteContent();
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <a
+        href="#main-content"
+        className="bg-primary text-primary-foreground sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:left-3 focus-visible:z-[80] focus-visible:rounded-lg focus-visible:px-4 focus-visible:py-2"
+      >
+        Skip to content
+      </a>
       <SiteHeader content={content} />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <PageTransition>{children}</PageTransition>
       </main>
       <SiteFooter content={content} />

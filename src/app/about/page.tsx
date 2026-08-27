@@ -101,11 +101,14 @@ export default async function AboutPage() {
                     className="aspect-[4/5] rounded-2xl"
                   />
                 ) : (
-                  <div className="bg-muted text-muted-foreground flex aspect-[4/5] items-center justify-center rounded-2xl font-heading text-4xl">
-                    {person.name
-                      .split(" ")
-                      .map((part) => part[0])
-                      .join("")}
+                  <div className="flex aspect-[4/5] flex-col items-center justify-center rounded-2xl bg-secondary text-center ring-1 ring-foreground/8">
+                    <span className="font-heading text-5xl tracking-tight text-primary">
+                      {person.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")}
+                    </span>
+                    <span className="mt-3 px-4 text-sm text-muted-foreground">Board member</span>
                   </div>
                 )}
                 <div className="flex flex-col gap-1">

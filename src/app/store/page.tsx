@@ -35,7 +35,7 @@ export default async function StorePage() {
             alt={featured.caption || SITE.storeName}
             sizes="100vw"
             preload
-            className="aspect-[4/5] rounded-none sm:aspect-[21/9] sm:rounded-2xl"
+            className="aspect-[4/5] rounded-none bg-ink sm:aspect-[21/9] sm:rounded-2xl"
           />
         </div>
       ) : null}

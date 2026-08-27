@@ -17,6 +17,11 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+function closeMobileNav() {
+  const toggle = document.getElementById("mobile-nav-toggle");
+  if (toggle instanceof HTMLInputElement) toggle.checked = false;
+}
+
 export function SiteHeader({ content }: { content: SiteContent }) {
   const pathname = usePathname();
   const donationUrl = content.links.donation || SITE.donationUrl;
@@ -34,7 +39,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
 
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-2 px-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] sm:h-20 sm:gap-3 sm:px-8">
-          <SiteMark compact />
+          <SiteMark compact wordmark="desktop" />
 
           <nav className="hidden items-center gap-2 lg:flex">
             {navLinks.map((link) => {
@@ -61,7 +66,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button asChild className="h-11 px-3.5 sm:px-4">
+            <Button asChild className="h-11 min-w-11 px-3.5 sm:px-4">
               <a href={donationUrl} target="_blank" rel="noopener noreferrer">
                 <Heart data-icon="inline-start" />
                 Donate
@@ -70,7 +75,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
 
             <label
               htmlFor="mobile-nav-toggle"
-              className={cn(buttonVariants({ variant: "outline", size: "icon-lg" }), "cursor-pointer lg:hidden")}
+              className={cn(buttonVariants({ variant: "outline", size: "icon" }), "size-11 cursor-pointer lg:hidden")}
             >
               <Menu />
               <span className="sr-only">Open menu</span>
@@ -86,10 +91,10 @@ export function SiteHeader({ content }: { content: SiteContent }) {
         aria-label={`Site navigation for ${SITE.name}`}
       >
         <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pr-[max(1.25rem,env(safe-area-inset-right))] pb-4">
-          <SiteMark href="/" compact />
+          <SiteMark href="/" compact onNavigate={closeMobileNav} />
           <label
             htmlFor="mobile-nav-toggle"
-            className={cn(buttonVariants({ variant: "outline", size: "icon-lg" }), "cursor-pointer")}
+            className={cn(buttonVariants({ variant: "outline", size: "icon" }), "size-11 cursor-pointer")}
           >
             <X />
             <span className="sr-only">Close menu</span>
@@ -102,8 +107,9 @@ export function SiteHeader({ content }: { content: SiteContent }) {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={closeMobileNav}
                 className={cn(
-                  "font-heading flex min-h-14 items-center text-4xl leading-none tracking-tight transition-colors",
+                  "font-heading flex min-h-14 items-center text-[clamp(2.25rem,10vw,3.25rem)] leading-none tracking-tight transition-colors",
                   active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                 )}
               >

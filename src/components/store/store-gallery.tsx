@@ -15,9 +15,9 @@ export function StoreGallery({ photos }: { photos: GalleryPhoto[] }) {
 
   return (
     <div id="store-gallery" className="flex flex-col gap-4">
-      <div className="columns-1 gap-4 sm:columns-2">
+      <div className="columns-2 gap-2 sm:gap-4">
         {photos.map((photo, index) => (
-          <RevealItem key={photo.id} delay={(index % 4) * 0.05} className="mb-4 break-inside-avoid">
+          <RevealItem key={photo.id} delay={(index % 4) * 0.05} className="mb-2 break-inside-avoid sm:mb-4">
             <figure className="group">
               <a
                 href={`#photo-${photo.id}`}
@@ -27,7 +27,7 @@ export function StoreGallery({ photos }: { photos: GalleryPhoto[] }) {
                   src={photo.src}
                   alt={photo.caption || "FOUND IT! Thrift Store"}
                   sizes="(max-width: 640px) 100vw, 34vw"
-                  className={cn("rounded-2xl", heights[index % heights.length])}
+                  className={cn("rounded-xl sm:rounded-2xl", heights[index % heights.length])}
                 />
               </a>
               {photo.caption ? (

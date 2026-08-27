@@ -172,18 +172,18 @@ export function AdminDashboard({
           <div className="flex min-w-0 items-center gap-3">
             <Image src="/images/logo1.webp" alt="" width={44} height={44} className="size-11 rounded-2xl object-cover" />
             <div className="min-w-0">
-              <p className="font-heading text-lg font-medium">{SITE.name}</p>
+              <p className="font-heading text-lg leading-tight font-medium">{SITE.name}</p>
               <p className="text-sm text-muted-foreground">
                 Admin · {persist === "blob" ? "Vercel Blob" : persist === "local" ? "local files" : "read-only seed"}
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
             <Badge variant="outline">{persist}</Badge>
-            <Button asChild variant="outline" className="h-11">
+            <Button asChild variant="outline" className="h-11 flex-1 sm:flex-none">
               <Link href="/">View site</Link>
             </Button>
-            <Button variant="ghost" className="h-11" onClick={logout}>
+            <Button variant="ghost" className="h-11 flex-1 sm:flex-none" onClick={logout}>
               Sign out
             </Button>
           </div>
@@ -606,14 +606,48 @@ export function AdminDashboard({
               <CardContent className="flex flex-col gap-4">
                 <Button
                   variant="outline"
-                  className="h-11 w-fit"
+                  className="h-11 w-full sm:w-fit"
                   onClick={() => {
                     window.location.href = "/api/registrations/export";
                   }}
                 >
                   Export CSV
                 </Button>
-                <div className="overflow-x-auto">
+                {registrations.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No registrations yet.</p>
+                ) : null}
+                <div className="flex flex-col gap-3 md:hidden">
+                  {registrations.map((entry) => (
+                    <div key={entry.id} className="flex flex-col gap-3 rounded-xl border bg-background p-4">
+                      <div className="flex flex-col gap-1">
+                        <p className="font-heading text-lg font-medium">
+                          {entry.firstName} {entry.lastName}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {classTitle.get(entry.classId) ?? "Removed class"}
+                        </p>
+                      </div>
+                      <a href={`mailto:${entry.email}`} className="text-sm break-all">
+                        {entry.email}
+                      </a>
+                      <a href={`tel:${entry.phone}`} className="text-sm">
+                        {entry.phone}
+                      </a>
+                      <p className="text-sm text-muted-foreground">{formatClassWhen(entry.createdAt)}</p>
+                      <label className="flex min-h-11 items-center gap-2 text-sm">
+                        <Checkbox
+                          checked={entry.contacted}
+                          onCheckedChange={(checked) => void patchRegistration(entry.id, Boolean(checked))}
+                        />
+                        Contacted
+                      </label>
+                      <Button variant="ghost" className="h-11" onClick={() => void removeRegistration(entry.id)}>
+                        Remove
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                <div className="hidden overflow-x-auto md:block">
                 <Table>
                   <TableHeader>
                     <TableRow>

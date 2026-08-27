@@ -83,7 +83,7 @@ export default async function ContactPage() {
               <CardHeader>
                 <CardTitle className="font-heading text-2xl font-medium">Send a message</CardTitle>
                 <CardDescription>
-                  There is no fake contact form. Email or call us and we will get back to you.
+                  Email or call us and we will get back to you. There is no form to fill out here.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-5">

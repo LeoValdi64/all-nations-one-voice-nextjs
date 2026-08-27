@@ -8,12 +8,14 @@ export function SiteMark({
   compact = false,
   invert = false,
   wordmark = "always",
+  onNavigate,
   className,
 }: {
   href?: string;
   compact?: boolean;
   invert?: boolean;
   wordmark?: "always" | "desktop";
+  onNavigate?: () => void;
   className?: string;
 }) {
   const mark = (
@@ -52,7 +54,11 @@ export function SiteMark({
   if (!href) return mark;
 
   return (
-    <Link href={href} className="rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className="rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+    >
       {mark}
     </Link>
   );
