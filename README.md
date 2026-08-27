@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# All Nations One Voice
 
-## Getting Started
+Public website for All Nations One Voice — a Federal Way nonprofit — and FOUND IT! Thrift Store.
 
-First, run the development server:
+Built with Next.js 16, shadcn/ui, Motion, and Lucide. There is no shopping cart. Classes appear only when the team publishes them. Money gifts go to Stripe, not a bank account on the site.
+
+## Pages
+
+- `/` Home
+- `/store` FOUND IT! Thrift Store gallery, hours, map
+- `/classes` Upcoming classes and online registration
+- `/about` Story, values, team
+- `/contact` Email, phone, map, donate, Facebook
+- `/admin` Password-protected editor for copy, photos, classes, and registrations
+
+## Local development
 
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Admin password locally: `anv-admin`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production on Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Use the project that already serves the custom domain: **all-nations-one-voice**.
 
-## Learn More
+Do not move `allnationsonevoice.org` to the duplicate project `all-nations-one-voice-nextjs`. DNS is on Cloudflare; MX is Google (`smtp.google.com`). Leave those records alone.
 
-To learn more about Next.js, take a look at the following resources:
+Dashboard:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Project: https://vercel.com/leovaldis-projects/all-nations-one-voice
+- Environment variables: https://vercel.com/leovaldis-projects/all-nations-one-voice/settings/environment-variables
+- Blob store: https://vercel.com/leovaldis-projects/all-nations-one-voice/stores
+- Domains: https://vercel.com/leovaldis-projects/all-nations-one-voice/settings/domains
+- Disconnect the extra Git project: https://vercel.com/leovaldis-projects/all-nations-one-voice-nextjs/settings/git
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Set these environment variables on **Production + Preview** before (or right after) merge:
 
-## Deploy on Vercel
+| Variable | Why |
+| --- | --- |
+| `ADMIN_PASSWORD` | Shared login for `/admin` |
+| `BLOB_READ_WRITE_TOKEN` | Persist photo uploads and admin edits. The Vercel filesystem is read-only. Create a Blob store on the project above if this is empty. |
+| `NEXT_PUBLIC_STRIPE_DONATION_URL` | Donate button. Defaults to `https://donate.stripe.com/dR615Z1P6eHrg6c000` if unset. |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Public pages work without those secrets. `/admin` will not sign in, and edits will not persist, until they are set. Redeploy Production after saving env vars.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`metadataBase` is `https://allnationsonevoice.org`. `*.vercel.app` hosts send `X-Robots-Tag: noindex`.
+
+## Scripts
+
+```bash
+npm run lint
+npm run build
+npm start
+```

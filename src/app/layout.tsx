@@ -1,27 +1,67 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Fraunces, Manrope } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#f8f5ef",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
-  title: "All Nation One Voice | Uniting cultures, building peace",
+  metadataBase: new URL("https://allnationsonevoice.org"),
+  title: {
+    default: "All Nations One Voice | Federal Way nonprofit",
+    template: "%s | All Nations One Voice",
+  },
   description:
-    "We are a global community working for unity and understanding among all cultures and nations.",
-  keywords:
-    "NGO, global community, unity, peace, cultures, nations, education, job training, support",
+    "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way, Washington.",
+  keywords: [
+    "All Nations One Voice",
+    "FOUND IT Thrift Store",
+    "Federal Way",
+    "job search help",
+    "nonprofit",
+    "thrift store",
+  ],
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   openGraph: {
-    title: "All Nation One Voice",
+    title: "All Nations One Voice",
     description:
-      "We are a global community working for unity and understanding among all cultures and nations.",
+      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way.",
     type: "website",
+    locale: "en_US",
+    siteName: "All Nations One Voice",
     url: "https://allnationsonevoice.org",
-    images: [{ url: "/images/og-image.jpg" }],
+    images: [{ url: "/images/logo1.webp", alt: "All Nations One Voice" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "All Nation One Voice",
+    title: "All Nations One Voice",
     description:
-      "We are a global community working for unity and understanding among all cultures and nations.",
+      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way.",
+    images: ["/images/logo1.webp"],
   },
-  icons: { icon: "/favicon.ico" },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/images/logo1.webp",
+  },
 };
 
 export default function RootLayout({
@@ -30,17 +70,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="canonical" href="https://allnationsonevoice.org" />
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link
-          href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen bg-white text-slate-700 font-sans antialiased">
+    <html lang="en" className={cn(manrope.className, manrope.variable, fraunces.variable)}>
+      <body className="min-h-screen bg-background text-foreground antialiased">
         {children}
+        <Toaster />
       </body>
     </html>
   );

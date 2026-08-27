@@ -1,158 +1,123 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Heart, Store } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SITE } from "@/lib/constants";
+import type { SiteContent } from "@/lib/content";
+import type { GalleryPhoto } from "@/lib/gallery";
+import { cn } from "@/lib/utils";
 
-const DONATION_URL =
-  process.env.NEXT_PUBLIC_STRIPE_DONATION_URL || "https://donate.stripe.com/dR615Z1P6eHrg6c000";
-
-function GradientButton({
-  children,
-  className,
-  primary = false,
-  ...props
+export function HeroSection({
+  content,
+  photo,
 }: {
-  children: React.ReactNode;
-  className?: string;
-  primary?: boolean;
-  [key: string]: unknown;
+  content: SiteContent;
+  photo: GalleryPhoto | null;
 }) {
+  const donationUrl = content.links.donation || SITE.donationUrl;
+
+  if (!photo) {
+    return (
+      <section className="relative overflow-hidden">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-2 lg:gap-12">
+          <div className="reveal-up flex flex-col items-start gap-5 sm:gap-6">
+            <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-primary uppercase">
+              {content.hero.subtitle}
+            </p>
+            <h1 className="display-title max-w-xl">{content.hero.title}</h1>
+            <p className="max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {content.hero.body}
+            </p>
+            <HeroActions donationUrl={donationUrl} onDark={false} />
+          </div>
+          <div className="reveal-up flex justify-center [animation-delay:120ms] lg:justify-end">
+            <Image
+              src="/images/logo1.webp"
+              alt={SITE.name}
+              width={480}
+              height={480}
+              preload
+              className="w-full max-w-md rounded-[2rem] object-cover shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.98 }}
-      className={[
-        "relative overflow-hidden rounded-full px-8 py-4 font-medium shadow-xl transition-all duration-300 border-2",
-        primary
-          ? "border-amber-600 bg-amber-500 text-white"
-          : "border-green-500 bg-white text-green-700",
-        "hover:shadow-2xl",
-        className ?? "",
-      ].join(" ")}
-      {...props}
-    >
-      <span className="relative z-10">{children}</span>
-    </motion.button>
+    <section className="relative">
+      <div className="relative isolate min-h-[34rem] overflow-hidden bg-ink h-[min(86svh,42rem)] md:h-[calc(100svh-5rem)] md:min-h-[38rem]">
+        <Image
+          src={photo.src}
+          alt={photo.caption || "FOUND IT! Thrift Store"}
+          fill
+          preload
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/52 to-black/25" />
+        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-5 pt-20 pb-8 sm:px-8 sm:pt-24 sm:pb-16 md:pb-20">
+          <div className="reveal-up flex max-w-3xl flex-col items-start gap-4 sm:gap-6">
+            <div className="rounded-[1.35rem] bg-cream p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-1 ring-white/80 sm:rounded-[1.6rem] sm:p-2">
+              <Image
+                src="/images/logo1.webp"
+                alt=""
+                width={88}
+                height={88}
+                className="size-14 rounded-[1.05rem] object-cover sm:size-20 sm:rounded-[1.2rem]"
+              />
+            </div>
+            <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-primary uppercase">
+              {content.hero.subtitle}
+            </p>
+            <h1 className="display-title text-background">{content.hero.title}</h1>
+            <p className="hidden max-w-xl text-lg leading-relaxed text-background/80 md:block">
+              {content.hero.body}
+            </p>
+            <HeroActions donationUrl={donationUrl} onDark />
+          </div>
+        </div>
+      </div>
+      <div className="md:hidden">
+        <p className="mx-auto max-w-6xl px-5 py-8 text-base leading-relaxed text-muted-foreground">
+          {content.hero.body}
+        </p>
+      </div>
+    </section>
   );
 }
 
-export function HeroSection() {
-  const [scrolled] = useState(false);
-
-  const scrollToMission = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const el = document.getElementById("Mision");
-    if (el) {
-      window.scrollTo({ top: el.offsetTop, behavior: "smooth" });
-    }
-  };
+function HeroActions({
+  donationUrl,
+  onDark,
+}: {
+  donationUrl: string;
+  onDark: boolean;
+}) {
+  const secondary = onDark
+    ? "border-background/30 bg-background/12 text-background hover:bg-background/22 hover:text-background"
+    : undefined;
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-cover bg-center">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('/images/hero-background.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "brightness(0.9)",
-          }}
-        />
-        <div className="absolute inset-0 bg-[#f8f5ef]/95" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(227,140,0,0.15),transparent_70%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(134,239,172,0.15),transparent_70%)]" />
-        <div className="absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-amber-100/30 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 h-48 w-48 rounded-full bg-green-100/30 blur-3xl" />
-        <div className="absolute top-3/4 right-1/3 h-36 w-36 rounded-full bg-amber-50/30 blur-3xl" />
+    <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+      <Button asChild size="lg" className="h-12 w-full sm:w-auto">
+        <Link href="/store">
+          <Store data-icon="inline-start" />
+          Visit the store
+        </Link>
+      </Button>
+      <div className="grid grid-cols-2 gap-3 sm:contents">
+        <Button asChild size="lg" variant="secondary" className={cn("h-12 w-full sm:w-auto", secondary)}>
+          <Link href="/contact">Get support</Link>
+        </Button>
+        <Button asChild size="lg" variant="secondary" className={cn("h-12 w-full sm:w-auto", secondary)}>
+          <a href={donationUrl} target="_blank" rel="noopener noreferrer">
+            <Heart data-icon="inline-start" />
+            Donate
+          </a>
+        </Button>
       </div>
-
-      {/* Content */}
-      <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center px-4 py-20 lg:grid-cols-2 lg:gap-12">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          <h1 className="animate-fade-in mb-2 text-5xl font-bold tracking-tight text-amber-600 md:text-7xl">
-            <span className="block md:inline">All Nations</span>
-            <span className="block md:inline"> One Voice</span>
-          </h1>
-          <h2 className="mb-4 text-2xl font-light text-amber-500 md:text-3xl">
-            a nonprofit organization
-          </h2>
-
-          <p className="mb-6 mx-auto max-w-2xl text-lg text-gray-700 md:text-xl">
-            Empowering lives through education, job training, and essential
-            support services to create more inclusive, dignified, and
-            self-sufficient communities.
-          </p>
-
-          <div className="mt-4 space-y-2 md:space-y-0 md:space-x-4 lg:mt-8 flex flex-col md:flex-row gap-4 items-center justify-center">
-            <Link href="/contact">
-              <GradientButton
-                primary
-                className="transform shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/20 hover:bg-amber-600 cursor-pointer active:scale-95"
-              >
-                Cooperate with us
-              </GradientButton>
-            </Link>
-            <a
-              href={DONATION_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-green-500 bg-white px-8 py-4 text-gray-800 font-medium shadow-xl hover:bg-green-50 hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/20 hover:text-green-800 transition-all duration-300 cursor-pointer active:scale-95"
-            >
-              <Heart className="h-5 w-5 transition-transform duration-300 group-hover:scale-125 group-hover:text-red-400" />
-              Donate Now
-            </a>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-12 lg:mt-0 flex items-center justify-center"
-        >
-          <div className="relative">
-            <div className="absolute -inset-6 rounded-full bg-amber-100/30 blur-xl"></div>
-            <img
-              src="/images/logo1.webp"
-              alt="All Nations One Voice Logo"
-              className="max-w-xs md:max-w-sm lg:max-w-md w-full h-auto relative z-10 drop-shadow-xl"
-              style={{ filter: "brightness(1.1) contrast(1.05)" }}
-            />
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
-      >
-        <motion.a
-          href="#Mision"
-          onClick={scrollToMission}
-          animate={{ y: [0, 12, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="flex flex-col items-center cursor-pointer"
-        >
-          <span className="mb-2 text-sm font-light text-gray-700">
-            Discover more
-          </span>
-          <div className="h-8 w-5 rounded-full border border-green-500 p-1">
-            <div className="h-2 w-2 rounded-full bg-green-500" />
-          </div>
-        </motion.a>
-      </motion.div>
-    </section>
+    </div>
   );
 }

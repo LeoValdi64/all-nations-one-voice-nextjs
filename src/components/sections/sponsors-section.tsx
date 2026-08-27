@@ -1,4 +1,5 @@
-import React from "react";
+import Image from "next/image";
+import { Container } from "@/components/layout/container";
 
 const sponsors = [
   {
@@ -57,60 +58,52 @@ const sponsors = [
   },
 ];
 
-const firstRow = sponsors.slice(0, 4);
-const secondRow = sponsors.slice(4);
-
 export function SponsorsSection() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="mx-auto max-w-7xl">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Our Sponsors
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-            Organizations and institutions that support our global mission.
+    <section className="border-t bg-background">
+      <Container className="flex flex-col gap-8 py-14">
+        <div className="flex flex-col items-center gap-2 text-center">
+          <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
+            Community partners
+          </p>
+          <p className="max-w-lg text-sm text-muted-foreground">
+            Neighbors and businesses who help this work stay open.
           </p>
         </div>
-
-        <div className="mt-16 flex flex-col items-center space-y-16">
-          <div className="flex flex-wrap justify-center gap-16 w-full">
-            {firstRow.map((s) => (
+        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+          {sponsors.map((sponsor) => {
+            const image = (
+              <Image
+                src={sponsor.image}
+                alt={sponsor.name}
+                width={160}
+                height={40}
+                className="h-10 w-auto object-contain"
+              />
+            );
+            const className =
+              "inline-flex min-h-11 items-center opacity-70 grayscale transition-[opacity,filter] duration-300 hover:opacity-100 hover:grayscale-0";
+            if (!sponsor.url || sponsor.url === "#") {
+              return (
+                <span key={sponsor.id} className={className}>
+                  {image}
+                </span>
+              );
+            }
+            return (
               <a
-                key={s.id}
-                href={s.url}
+                key={sponsor.id}
+                href={sponsor.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
+                className={className}
               >
-                <img
-                  src={s.image}
-                  alt={s.name}
-                  className="max-h-40 max-w-full object-contain"
-                />
+                {image}
               </a>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-16 w-full">
-            {secondRow.map((s) => (
-              <a
-                key={s.id}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center hover:scale-110 transition-transform duration-300"
-              >
-                <img
-                  src={s.image}
-                  alt={s.name}
-                  className="max-h-40 max-w-full object-contain"
-                />
-              </a>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
