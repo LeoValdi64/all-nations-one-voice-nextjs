@@ -26,6 +26,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
   const pathname = usePathname();
   const donationUrl = content.links.donation || SITE.donationUrl;
   const facebook = content.links.facebook || SITE.facebook;
+  const instagram = content.links.instagram || SITE.instagram;
 
   return (
     <>
@@ -128,6 +129,11 @@ export function SiteHeader({ content }: { content: SiteContent }) {
             <a href={donationUrl} target="_blank" rel="noopener noreferrer">
               <Heart data-icon="inline-start" />
               Donate
+            </a>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="h-12">
+            <a href={instagram} target="_blank" rel="noopener noreferrer">
+              Instagram
             </a>
           </Button>
           <Button asChild size="lg" variant="outline" className="h-12">

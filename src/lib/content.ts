@@ -32,6 +32,7 @@ export type SiteContent = {
   storeHours: string;
   links: {
     facebook: string;
+    instagram: string;
     maps: string;
     donation: string;
   };
@@ -50,7 +51,7 @@ export const defaultSiteContent: SiteContent = {
   },
   about: {
     title: "Who We Are",
-    body: "We are a Federal Way nonprofit founded in 2025. Our work is local and practical: sit with someone who is looking for a job, connect people to support, and run a thrift store that serves the neighborhood.",
+    body: "We are a Federal Way nonprofit founded in 2025. Our work is local and practical: sit with someone who is looking for a job, connect people to support, and run FOUND IT! Thrift Store so neighbors can shop, donate, and find what they need.",
     bullets: [
       "Founded in 2025 to serve our Federal Way community",
       "Computer access and one-on-one help looking for work",
@@ -99,6 +100,7 @@ export const defaultSiteContent: SiteContent = {
   storeHours: DEFAULT_STORE_HOURS,
   links: {
     facebook: SITE.facebook,
+    instagram: SITE.instagram,
     maps: SITE.mapsShare,
     donation: SITE.donationUrl,
   },

@@ -9,11 +9,13 @@ export function VisitCard({
   hours,
   mapsUrl,
   facebook,
+  instagram,
   className,
 }: {
   hours: string;
   mapsUrl: string;
   facebook: string;
+  instagram: string;
   className?: string;
 }) {
   return (
@@ -55,6 +57,11 @@ export function VisitCard({
         <Button asChild className="h-11">
           <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
             Get directions
+          </a>
+        </Button>
+        <Button asChild variant="outline" className="h-11">
+          <a href={instagram} target="_blank" rel="noopener noreferrer">
+            Instagram
           </a>
         </Button>
         <Button asChild variant="outline" className="h-11">

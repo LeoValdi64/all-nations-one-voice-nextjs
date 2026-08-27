@@ -19,6 +19,7 @@ const navLinks = [
 export function SiteFooter({ content }: { content: SiteContent }) {
   const donationUrl = content.links.donation || SITE.donationUrl;
   const facebook = content.links.facebook || SITE.facebook;
+  const instagram = content.links.instagram || SITE.instagram;
   const year = new Date().getFullYear();
 
   return (
@@ -57,11 +58,18 @@ export function SiteFooter({ content }: { content: SiteContent }) {
               A Federal Way nonprofit offering job-search help, support services, and a community
               thrift store.
             </p>
-            <Button asChild variant="outline" className="w-fit">
-              <a href={facebook} target="_blank" rel="noopener noreferrer">
-                Facebook
-              </a>
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button asChild variant="outline" className="w-fit">
+                <a href={instagram} target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="w-fit">
+                <a href={facebook} target="_blank" rel="noopener noreferrer">
+                  Facebook
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4">
