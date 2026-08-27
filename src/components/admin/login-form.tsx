@@ -9,7 +9,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { SITE } from "@/lib/constants";
 
-export function LoginForm({ configured }: { configured: boolean }) {
+export function LoginForm({ configured, failed = false }: { configured: boolean; failed?: boolean }) {
   const [pending, setPending] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -26,7 +26,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
       toast.error("That password is not correct.");
       return;
     }
-    window.location.reload();
+    window.location.assign("/admin");
   }
 
   return (
@@ -35,7 +35,9 @@ export function LoginForm({ configured }: { configured: boolean }) {
         <CardHeader className="gap-4">
           <SiteMark href="/" compact />
           <div className="flex flex-col gap-1.5">
-            <CardTitle className="font-heading text-2xl">{SITE.name} admin</CardTitle>
+            <CardTitle className="font-heading text-2xl">
+              <h1 className="font-heading text-2xl font-medium">{SITE.name} admin</h1>
+            </CardTitle>
             <CardDescription>
               Edit website copy, store photos, classes, and registrations.
             </CardDescription>
@@ -43,12 +45,15 @@ export function LoginForm({ configured }: { configured: boolean }) {
         </CardHeader>
         <CardContent>
           {configured ? (
-            <form onSubmit={onSubmit}>
+            <form action="/api/auth/login" method="post" onSubmit={onSubmit}>
               <FieldGroup>
                 <Field>
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <Input id="password" name="password" type="password" required autoFocus />
                 </Field>
+                {failed ? (
+                  <p className="text-sm text-destructive">That password is not correct.</p>
+                ) : null}
                 <Button type="submit" size="lg" disabled={pending}>
                   {pending ? "Signing in…" : "Sign in"}
                 </Button>

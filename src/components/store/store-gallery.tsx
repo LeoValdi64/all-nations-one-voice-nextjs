@@ -1,24 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { X } from "lucide-react";
 import { PhotoFrame } from "@/components/media/photo-frame";
 import { RevealItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import type { GalleryPhoto } from "@/lib/gallery";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 const heights = ["aspect-[4/5]", "aspect-square", "aspect-[5/4]", "aspect-[3/4]"];
 
 export function StoreGallery({ photos }: { photos: GalleryPhoto[] }) {
   const [active, setActive] = useState<GalleryPhoto | null>(null);
+
+  useEffect(() => {
+    if (!active) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActive(null);
+    };
+    document.addEventListener("keydown", onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [active]);
 
   if (photos.length === 0) {
     return <p className="text-muted-foreground">Photos will appear here once they are added.</p>;
@@ -50,16 +58,14 @@ export function StoreGallery({ photos }: { photos: GalleryPhoto[] }) {
         ))}
       </div>
 
-      <Dialog open={Boolean(active)} onOpenChange={(open) => !open && setActive(null)}>
-        <DialogContent
-          showCloseButton={false}
-          className="inset-3 top-3 left-3 flex h-[calc(100dvh-1.5rem)] max-h-none w-[calc(100%-1.5rem)] max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-hidden rounded-2xl bg-ink p-0 text-background ring-0 sm:inset-6 sm:top-6 sm:left-6 sm:h-[calc(100dvh-3rem)] sm:w-[calc(100%-3rem)] sm:max-w-none"
+      {active ? (
+        <div
+          className="fixed inset-0 z-50 flex flex-col bg-ink/96"
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.caption || "Store photo"}
         >
-          <DialogTitle className="sr-only">{active?.caption || "Store photo"}</DialogTitle>
-          <DialogDescription className="sr-only">
-            Larger view of a FOUND IT! Thrift Store photograph.
-          </DialogDescription>
-          <div className="absolute top-3 right-3 z-10">
+          <div className="flex justify-end p-3">
             <Button
               type="button"
               size="icon-lg"
@@ -70,19 +76,17 @@ export function StoreGallery({ photos }: { photos: GalleryPhoto[] }) {
               <X />
             </Button>
           </div>
-          {active ? (
-            <div className="relative min-h-0 flex-1">
-              <Image
-                src={active.src}
-                alt={active.caption || "FOUND IT! Thrift Store"}
-                fill
-                sizes="100vw"
-                className="object-contain p-4 sm:p-10"
-              />
-            </div>
-          ) : null}
-        </DialogContent>
-      </Dialog>
+          <div className="relative min-h-0 flex-1">
+            <Image
+              src={active.src}
+              alt={active.caption || "FOUND IT! Thrift Store"}
+              fill
+              sizes="100vw"
+              className="object-contain p-4 sm:p-10"
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

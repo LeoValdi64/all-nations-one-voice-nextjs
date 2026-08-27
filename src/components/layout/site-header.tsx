@@ -2,18 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Heart, Menu } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Heart, Menu, X } from "lucide-react";
 import { SiteMark } from "@/components/brand/site-mark";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { SITE } from "@/lib/constants";
 import type { SiteContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -31,6 +23,20 @@ export function SiteHeader({ content }: { content: SiteContent }) {
   const [open, setOpen] = useState(false);
   const donationUrl = content.links.donation || SITE.donationUrl;
   const facebook = content.links.facebook || SITE.facebook;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
 
   return (
     <>
@@ -76,70 +82,80 @@ export function SiteHeader({ content }: { content: SiteContent }) {
               </a>
             </Button>
 
-            <Sheet open={open} onOpenChange={setOpen}>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon-lg"
-                className="lg:hidden"
-                aria-label="Open menu"
-                onClick={() => setOpen(true)}
-              >
-                <Menu />
-              </Button>
-              <SheetContent
-                side="right"
-                className="w-full max-w-none gap-0 bg-cream p-0 sm:max-w-none data-[side=right]:w-full"
-              >
-                <SheetHeader className="px-6 pt-[max(1.5rem,env(safe-area-inset-top))]">
-                  <SheetTitle className="sr-only">{SITE.name}</SheetTitle>
-                  <SheetDescription className="sr-only">
-                    Site navigation for {SITE.name}
-                  </SheetDescription>
-                  <SiteMark href="/" compact />
-                </SheetHeader>
-                <Separator />
-                <nav className="flex flex-1 flex-col justify-center gap-1 px-6 py-6">
-                  {navLinks.map((link) => {
-                    const active = pathname === link.href;
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "font-heading flex min-h-14 items-center text-4xl leading-none tracking-tight transition-colors",
-                          active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        {link.label}
-                      </Link>
-                    );
-                  })}
-                </nav>
-                <div className="flex flex-col gap-3 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {SITE.addressLine1}
-                    <br />
-                    {SITE.cityLine}
-                  </p>
-                  <Button asChild size="lg" className="h-12">
-                    <a href={donationUrl} target="_blank" rel="noopener noreferrer">
-                      <Heart data-icon="inline-start" />
-                      Donate
-                    </a>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="h-12">
-                    <a href={facebook} target="_blank" rel="noopener noreferrer">
-                      Facebook
-                    </a>
-                  </Button>
-                </div>
-              </SheetContent>
-            </Sheet>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon-lg"
+              className="lg:hidden"
+              aria-label="Open menu"
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              onClick={() => setOpen(true)}
+            >
+              <Menu />
+            </Button>
           </div>
         </div>
       </header>
+
+      {open ? (
+        <div
+          id="mobile-nav"
+          className="fixed inset-0 z-50 flex flex-col bg-cream lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Site navigation for ${SITE.name}`}
+        >
+          <div className="flex items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pr-[max(1.25rem,env(safe-area-inset-right))] pb-4">
+            <SiteMark href="/" compact />
+            <Button
+              type="button"
+              variant="outline"
+              size="icon-lg"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+            >
+              <X />
+            </Button>
+          </div>
+          <nav className="flex flex-1 flex-col justify-center gap-1 px-6">
+            {navLinks.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "font-heading flex min-h-14 items-center text-4xl leading-none tracking-tight transition-colors",
+                    active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div className="flex flex-col gap-3 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {SITE.addressLine1}
+              <br />
+              {SITE.cityLine}
+            </p>
+            <Button asChild size="lg" className="h-12">
+              <a href={donationUrl} target="_blank" rel="noopener noreferrer">
+                <Heart data-icon="inline-start" />
+                Donate
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12">
+              <a href={facebook} target="_blank" rel="noopener noreferrer">
+                Facebook
+              </a>
+            </Button>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

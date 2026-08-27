@@ -7,10 +7,15 @@ import { getGallery, getRegistrations, getSiteContent } from "@/lib/storage";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminPage() {
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const admin = await isAdmin();
   if (!admin) {
-    return <LoginForm configured={Boolean(getAdminPassword())} />;
+    const params = await searchParams;
+    return <LoginForm configured={Boolean(getAdminPassword())} failed={params.error === "1"} />;
   }
 
   const [content, photos, classes, registrations] = await Promise.all([

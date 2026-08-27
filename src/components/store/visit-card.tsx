@@ -51,7 +51,7 @@ export function VisitCard({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex-col items-stretch gap-2">
+      <CardFooter className="flex-col items-stretch gap-3">
         <Button asChild className="h-11">
           <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
             Get directions

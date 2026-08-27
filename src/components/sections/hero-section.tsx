@@ -71,7 +71,7 @@ export function HeroSection({
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/45 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/52 to-black/25" />
         <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-5 pt-24 pb-8 sm:px-8 sm:pb-16 md:pb-20">
           <motion.div
             initial={{ y: 18 }}
