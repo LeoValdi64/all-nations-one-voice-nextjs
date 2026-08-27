@@ -10,8 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -37,6 +37,17 @@ import { SITE } from "@/lib/constants";
 
 type Persist = "blob" | "local" | "readonly";
 
+const ADMIN_TABS = [
+  { id: "content", label: "Content" },
+  { id: "services", label: "Services" },
+  { id: "hours", label: "Hours" },
+  { id: "gallery", label: "Store photos" },
+  { id: "classes", label: "Classes" },
+  { id: "registrations", label: "Registrations" },
+] as const;
+
+type AdminTab = (typeof ADMIN_TABS)[number]["id"];
+
 export function AdminDashboard({
   content: initialContent,
   photos: initialPhotos,
@@ -56,6 +67,7 @@ export function AdminDashboard({
   const [registrations, setRegistrations] = useState(initialRegistrations);
   const [saving, setSaving] = useState(false);
   const [draft, setDraft] = useState<ClassItem>(defaultClassDraft());
+  const [tab, setTab] = useState<AdminTab>("content");
 
   const classTitle = useMemo(
     () => new Map(classes.map((item) => [item.id, item.title])),
@@ -199,29 +211,34 @@ export function AdminDashboard({
           </Alert>
         ) : null}
 
-        <Tabs defaultValue="content">
-          <TabsList variant="line" className="mb-6 flex h-auto min-h-11 w-full flex-wrap justify-start gap-1">
-            <TabsTrigger value="content" className="min-h-11 flex-none px-3">
-              Content
-            </TabsTrigger>
-            <TabsTrigger value="services" className="min-h-11 flex-none px-3">
-              Services
-            </TabsTrigger>
-            <TabsTrigger value="hours" className="min-h-11 flex-none px-3">
-              Hours
-            </TabsTrigger>
-            <TabsTrigger value="gallery" className="min-h-11 flex-none px-3">
-              Store photos
-            </TabsTrigger>
-            <TabsTrigger value="classes" className="min-h-11 flex-none px-3">
-              Classes
-            </TabsTrigger>
-            <TabsTrigger value="registrations" className="min-h-11 flex-none px-3">
-              Registrations
-            </TabsTrigger>
-          </TabsList>
+        <div>
+          <div
+            role="tablist"
+            aria-label="Admin sections"
+            className="mb-6 flex h-auto min-h-11 w-full flex-wrap justify-start gap-1 border-b"
+          >
+            {ADMIN_TABS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={tab === item.id}
+                data-state={tab === item.id ? "active" : "inactive"}
+                onClick={() => setTab(item.id)}
+                className={cn(
+                  "relative h-11 min-h-11 flex-none px-3 text-sm font-medium transition-colors",
+                  tab === item.id
+                    ? "text-foreground after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:bg-foreground"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
 
-          <TabsContent value="content" className="flex flex-col gap-6">
+          {tab === "content" ? (
+          <div className="flex flex-col gap-6">
             <Card>
               <CardHeader>
                 <CardTitle>Homepage copy</CardTitle>
@@ -329,9 +346,11 @@ export function AdminDashboard({
                 </FieldGroup>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          ) : null}
 
-          <TabsContent value="services">
+          {tab === "services" ? (
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle>Services</CardTitle>
@@ -402,9 +421,11 @@ export function AdminDashboard({
                 </Button>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          ) : null}
 
-          <TabsContent value="hours">
+          {tab === "hours" ? (
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle>Hours and links</CardTitle>
@@ -469,9 +490,11 @@ export function AdminDashboard({
                 </FieldGroup>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          ) : null}
 
-          <TabsContent value="gallery">
+          {tab === "gallery" ? (
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle>Store photos</CardTitle>
@@ -554,9 +577,11 @@ export function AdminDashboard({
                 <Button onClick={() => void savePhotos(photos)}>Save gallery</Button>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          ) : null}
 
-          <TabsContent value="classes" className="flex flex-col gap-6">
+          {tab === "classes" ? (
+          <div className="flex flex-col gap-6">
             <Card>
               <CardHeader>
                 <CardTitle>New class</CardTitle>
@@ -595,9 +620,11 @@ export function AdminDashboard({
                 </CardContent>
               </Card>
             ))}
-          </TabsContent>
+          </div>
+          ) : null}
 
-          <TabsContent value="registrations">
+          {tab === "registrations" ? (
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle>Registrations</CardTitle>
@@ -688,8 +715,9 @@ export function AdminDashboard({
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
+          </div>
+          ) : null}
+        </div>
       </main>
     </div>
   );

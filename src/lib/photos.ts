@@ -1,9 +1,16 @@
 import type { GalleryPhoto } from "@/lib/gallery";
 
 const GRAPHIC_IDS = new Set([
+  "fbid-122093597474883611",
+  "fbid-122142262898883611",
   "fbid-122151136184883611",
   "fbid-122151137846883611",
   "fbid-122151435896883611",
+  "fbid-122151436184883611",
+  "fbid-122151437606883611",
+  "fbid-122151495386883611",
+  "fbid-122151495818883611",
+  "fbid-122152785494883611",
 ]);
 
 const PREFERRED_HERO_IDS = [
