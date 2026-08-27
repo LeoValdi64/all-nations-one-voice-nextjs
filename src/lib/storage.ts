@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { neon } from "@neondatabase/serverless";
 import { list, put } from "@vercel/blob";
 import { mergeSiteContent, type SiteContent } from "@/lib/content";
 import type { ClassItem, Registration } from "@/lib/classes";
@@ -20,6 +21,18 @@ const KEYS = {
 
 function hasBlobToken() {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
+
+function databaseUrl() {
+  return process.env.DATABASE_URL?.trim() || "";
+}
+
+function hasDatabase() {
+  return Boolean(databaseUrl());
+}
+
+function sql() {
+  return neon(databaseUrl());
 }
 
 function canWriteLocal() {
@@ -54,9 +67,20 @@ async function readBlobJson<T>(file: string): Promise<T | null> {
   return (await response.json()) as T;
 }
 
+async function readDatabaseJson<T>(file: string): Promise<T | null> {
+  if (!hasDatabase()) return null;
+  const rows = await sql()`
+    SELECT value FROM site_docs WHERE key = ${file} LIMIT 1
+  `;
+  const value = rows[0]?.value;
+  return value ? (value as T) : null;
+}
+
 async function readDocument<T>(doc: StoreDoc, fallback: T): Promise<T> {
   const fromBlob = await readBlobJson<T>(doc.key);
   if (fromBlob) return fromBlob;
+  const fromDatabase = await readDatabaseJson<T>(doc.key);
+  if (fromDatabase) return fromDatabase;
   const fromLocal = await readLocalOverlay<T>(doc.key);
   if (fromLocal) return fromLocal;
   return readSeedFile<T>(doc.seedFile, fallback);
@@ -73,9 +97,18 @@ async function writeDocument<T>(file: string, value: T) {
     });
     return;
   }
+  if (hasDatabase()) {
+    await sql()`
+      INSERT INTO site_docs (key, value, updated_at)
+      VALUES (${file}, ${JSON.parse(body)}::jsonb, now())
+      ON CONFLICT (key)
+      DO UPDATE SET value = EXCLUDED.value, updated_at = now()
+    `;
+    return;
+  }
   if (!canWriteLocal()) {
     throw new Error(
-      "Production storage is read-only. Add BLOB_READ_WRITE_TOKEN so admin changes persist.",
+      "Production storage is read-only. Add DATABASE_URL or BLOB_READ_WRITE_TOKEN so admin changes persist.",
     );
   }
   await mkdir(LOCAL_DIR, { recursive: true });
@@ -83,24 +116,47 @@ async function writeDocument<T>(file: string, value: T) {
 }
 
 export async function uploadStoreImage(filename: string, file: Blob) {
-  if (!hasBlobToken()) {
-    if (!canWriteLocal()) {
-      throw new Error(
-        "Photo uploads need BLOB_READ_WRITE_TOKEN on Vercel. Locally, add the token or keep seed photos.",
-      );
-    }
-    const bytes = Buffer.from(await file.arrayBuffer());
-    const publicDir = path.join(process.cwd(), "public/images/store");
-    await mkdir(publicDir, { recursive: true });
-    await writeFile(path.join(publicDir, filename), bytes);
-    return `/images/store/${filename}`;
+  if (hasBlobToken()) {
+    const blob = await put(`${BLOB_PREFIX}store/${filename}`, file, {
+      access: "public",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+    });
+    return blob.url;
   }
-  const blob = await put(`${BLOB_PREFIX}store/${filename}`, file, {
-    access: "public",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
-  return blob.url;
+  if (hasDatabase()) {
+    const bytes = Buffer.from(await file.arrayBuffer());
+    const mime = file.type || "application/octet-stream";
+    await sql()`
+      INSERT INTO site_media (id, mime, bytes, updated_at)
+      VALUES (${filename}, ${mime}, ${bytes}, now())
+      ON CONFLICT (id)
+      DO UPDATE SET mime = EXCLUDED.mime, bytes = EXCLUDED.bytes, updated_at = now()
+    `;
+    return `/api/media/${filename}`;
+  }
+  if (!canWriteLocal()) {
+    throw new Error(
+      "Photo uploads need DATABASE_URL or BLOB_READ_WRITE_TOKEN on Vercel.",
+    );
+  }
+  const bytes = Buffer.from(await file.arrayBuffer());
+  const publicDir = path.join(process.cwd(), "public/images/store");
+  await mkdir(publicDir, { recursive: true });
+  await writeFile(path.join(publicDir, filename), bytes);
+  return `/images/store/${filename}`;
+}
+
+export async function getStoredMedia(id: string) {
+  if (!hasDatabase() || !id) return null;
+  const rows = await sql()`
+    SELECT mime, bytes FROM site_media WHERE id = ${id} LIMIT 1
+  `;
+  const row = rows[0];
+  if (!row) return null;
+  const bytes = row.bytes;
+  const buffer = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes as Uint8Array);
+  return { mime: String(row.mime || "application/octet-stream"), bytes: buffer };
 }
 
 export async function getSiteContent(): Promise<SiteContent> {
@@ -143,6 +199,7 @@ export async function saveRegistrations(registrations: Registration[]) {
 
 export function persistHint() {
   if (hasBlobToken()) return "blob" as const;
+  if (hasDatabase()) return "database" as const;
   if (canWriteLocal()) return "local" as const;
   return "readonly" as const;
 }

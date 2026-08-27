@@ -35,7 +35,7 @@ import type { GalleryPhoto } from "@/lib/gallery";
 import { fromDateTimeLocal, toDateTimeLocal, formatClassWhen } from "@/lib/format";
 import { SITE } from "@/lib/constants";
 
-type Persist = "blob" | "local" | "readonly";
+type Persist = "blob" | "database" | "local" | "readonly";
 
 const ADMIN_TABS = [
   { id: "content", label: "Content" },
@@ -186,7 +186,14 @@ export function AdminDashboard({
             <div className="min-w-0">
               <p className="font-heading text-lg leading-tight font-medium">{SITE.name}</p>
               <p className="text-sm text-muted-foreground">
-                Admin · {persist === "blob" ? "Vercel Blob" : persist === "local" ? "local files" : "read-only seed"}
+                Admin ·{" "}
+                {persist === "blob"
+                  ? "Vercel Blob"
+                  : persist === "database"
+                    ? "saved to database"
+                    : persist === "local"
+                      ? "local files"
+                      : "read-only seed"}
               </p>
             </div>
           </div>
@@ -206,7 +213,7 @@ export function AdminDashboard({
         {persist === "readonly" ? (
           <Alert className="mb-6">
             <AlertDescription>
-              This deployment cannot save uploads or edits until BLOB_READ_WRITE_TOKEN is set.
+              This deployment cannot save uploads or edits until DATABASE_URL or BLOB_READ_WRITE_TOKEN is set.
             </AlertDescription>
           </Alert>
         ) : null}
