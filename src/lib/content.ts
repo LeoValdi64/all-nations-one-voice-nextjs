@@ -1,4 +1,4 @@
-import { DEFAULT_OFFICE_HOURS, DEFAULT_STORE_HOURS, SITE } from "@/lib/constants";
+import { DEFAULT_OFFICE_HOURS, DEFAULT_STORE_HOURS, SITE, mapsUrl } from "@/lib/constants";
 
 export type ServiceItem = {
   id: string;
@@ -120,6 +120,10 @@ export function mergeSiteContent(partial?: Partial<SiteContent> | null): SiteCon
     },
     values: partial.values ?? defaultSiteContent.values,
     services: partial.services ?? defaultSiteContent.services,
-    links: { ...defaultSiteContent.links, ...partial.links },
+    links: {
+      ...defaultSiteContent.links,
+      ...partial.links,
+      maps: mapsUrl(partial.links?.maps ?? defaultSiteContent.links.maps),
+    },
   };
 }

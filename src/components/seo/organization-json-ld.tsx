@@ -21,15 +21,27 @@ export function OrganizationJsonLd() {
       postalCode: "98003",
       addressCountry: "US",
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: SITE.mapsLat,
+      longitude: SITE.mapsLng,
+    },
+    hasMap: SITE.mapsShare,
     areaServed: {
       "@type": "City",
       name: "Federal Way",
     },
-    sameAs: [SITE.facebook, SITE.instagram],
+    sameAs: [SITE.facebook, SITE.instagram, SITE.mapsShare],
     department: {
       "@type": "Store",
       name: SITE.storeName,
       image: `${ORG.siteUrl}/images/store/anv-2026-18-storefront.jpg`,
+      hasMap: SITE.mapsShare,
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: SITE.mapsLat,
+        longitude: SITE.mapsLng,
+      },
       address: {
         "@type": "PostalAddress",
         streetAddress: SITE.addressLine1,
