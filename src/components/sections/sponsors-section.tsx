@@ -71,14 +71,8 @@ export function SponsorsSection() {
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-          {sponsors.map((sponsor) => (
-            <a
-              key={sponsor.id}
-              href={sponsor.url}
-              target={sponsor.url === "#" ? undefined : "_blank"}
-              rel={sponsor.url === "#" ? undefined : "noopener noreferrer"}
-              className="opacity-70 grayscale transition-[opacity,filter] duration-300 hover:opacity-100 hover:grayscale-0"
-            >
+          {sponsors.map((sponsor) => {
+            const image = (
               <Image
                 src={sponsor.image}
                 alt={sponsor.name}
@@ -86,8 +80,28 @@ export function SponsorsSection() {
                 height={40}
                 className="h-10 w-auto object-contain"
               />
-            </a>
-          ))}
+            );
+            const className =
+              "inline-flex min-h-11 items-center opacity-70 grayscale transition-[opacity,filter] duration-300 hover:opacity-100 hover:grayscale-0";
+            if (!sponsor.url || sponsor.url === "#") {
+              return (
+                <span key={sponsor.id} className={className}>
+                  {image}
+                </span>
+              );
+            }
+            return (
+              <a
+                key={sponsor.id}
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={className}
+              >
+                {image}
+              </a>
+            );
+          })}
         </div>
       </Container>
     </section>

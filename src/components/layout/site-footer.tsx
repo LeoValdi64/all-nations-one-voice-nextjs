@@ -73,7 +73,7 @@ export function SiteFooter({ content }: { content: SiteContent }) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-foreground/80 transition-colors hover:text-foreground"
+                  className="inline-flex min-h-11 items-center text-sm text-foreground/80 transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </Link>
@@ -87,12 +87,15 @@ export function SiteFooter({ content }: { content: SiteContent }) {
             </p>
             <p className="text-sm leading-relaxed text-foreground/80">{SITE.fullAddress}</p>
             <a
-              className="text-sm break-all text-foreground/80 hover:text-foreground"
+              className="inline-flex min-h-11 items-center text-sm break-all text-foreground/80 hover:text-foreground"
               href={SITE.emailHref}
             >
               {SITE.email}
             </a>
-            <a className="text-sm text-foreground/80 hover:text-foreground" href={SITE.phoneHref}>
+            <a
+              className="inline-flex min-h-11 items-center text-sm text-foreground/80 hover:text-foreground"
+              href={SITE.phoneHref}
+            >
               {SITE.phone}
             </a>
           </div>
@@ -119,7 +122,7 @@ export function SiteFooter({ content }: { content: SiteContent }) {
             Site by{" "}
             <a
               href="https://leovaldi.com"
-              className="text-foreground underline-offset-4 hover:underline"
+              className="inline-flex min-h-11 items-center text-foreground underline-offset-4 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >

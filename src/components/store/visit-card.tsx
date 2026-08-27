@@ -42,10 +42,10 @@ export function VisitCard({
         <div className="flex gap-3">
           <Phone className="mt-0.5 size-4 text-primary" />
           <div className="flex flex-col gap-1 text-sm">
-            <a href={SITE.phoneHref} className="hover:text-primary">
+            <a href={SITE.phoneHref} className="inline-flex min-h-11 items-center hover:text-primary">
               {SITE.phone}
             </a>
-            <a href={SITE.emailHref} className="break-all hover:text-primary">
+            <a href={SITE.emailHref} className="inline-flex min-h-11 items-center break-all hover:text-primary">
               {SITE.email}
             </a>
           </div>

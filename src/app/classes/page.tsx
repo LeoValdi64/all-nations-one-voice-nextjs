@@ -20,14 +20,33 @@ export const metadata: Metadata = {
   description: "See upcoming classes from All Nations One Voice and register online.",
 };
 
-export default async function ClassesPage() {
+export default async function ClassesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ registered?: string; error?: string }>;
+}) {
   const classes = await getPublishedClasses();
+  const params = await searchParams;
 
   return (
     <OngLayout>
       <PageIntro eyebrow="Learn with us" title="Classes">
         When a class is scheduled, it appears here. Register online and we will follow up.
       </PageIntro>
+      {params.registered === "1" ? (
+        <Container className="max-w-3xl pb-6">
+          <p className="rounded-xl border bg-card px-4 py-3 text-sm">
+            You are registered. We will contact you at the email or phone you shared.
+          </p>
+        </Container>
+      ) : null}
+      {params.error === "1" ? (
+        <Container className="max-w-3xl pb-6">
+          <p className="rounded-xl border bg-card px-4 py-3 text-sm text-destructive">
+            We could not complete that registration. Check the form and try again.
+          </p>
+        </Container>
+      ) : null}
 
       <section className="pb-20 sm:pb-28">
         <Container className="max-w-3xl">

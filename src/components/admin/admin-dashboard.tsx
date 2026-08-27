@@ -200,13 +200,25 @@ export function AdminDashboard({
         ) : null}
 
         <Tabs defaultValue="content">
-          <TabsList variant="line" className="mb-6 w-full justify-start overflow-x-auto">
-            <TabsTrigger value="content">Content</TabsTrigger>
-            <TabsTrigger value="services">Services</TabsTrigger>
-            <TabsTrigger value="hours">Hours</TabsTrigger>
-            <TabsTrigger value="gallery">Store photos</TabsTrigger>
-            <TabsTrigger value="classes">Classes</TabsTrigger>
-            <TabsTrigger value="registrations">Registrations</TabsTrigger>
+          <TabsList variant="line" className="mb-6 flex h-auto min-h-11 w-full flex-wrap justify-start gap-1">
+            <TabsTrigger value="content" className="min-h-11 flex-none px-3">
+              Content
+            </TabsTrigger>
+            <TabsTrigger value="services" className="min-h-11 flex-none px-3">
+              Services
+            </TabsTrigger>
+            <TabsTrigger value="hours" className="min-h-11 flex-none px-3">
+              Hours
+            </TabsTrigger>
+            <TabsTrigger value="gallery" className="min-h-11 flex-none px-3">
+              Store photos
+            </TabsTrigger>
+            <TabsTrigger value="classes" className="min-h-11 flex-none px-3">
+              Classes
+            </TabsTrigger>
+            <TabsTrigger value="registrations" className="min-h-11 flex-none px-3">
+              Registrations
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="content" className="flex flex-col gap-6">

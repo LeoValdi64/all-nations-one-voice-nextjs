@@ -165,17 +165,60 @@
 @layer components {
   .display-title {
     font-family: var(--font-heading), "Fraunces Fallback", ui-serif, Georgia, serif;
-    font-size: clamp(2.55rem, 11.5vw, 4.75rem);
+    font-size: clamp(2.35rem, 10vw, 4.75rem);
     font-weight: 500;
     letter-spacing: -0.035em;
-    line-height: 0.92;
+    line-height: 0.96;
+    overflow-wrap: break-word;
+    text-wrap: balance;
   }
 
   .display-title-md {
     font-family: var(--font-heading), "Fraunces Fallback", ui-serif, Georgia, serif;
-    font-size: clamp(2rem, 7.4vw, 3.35rem);
+    font-size: clamp(1.85rem, 7vw, 3.35rem);
     font-weight: 500;
     letter-spacing: -0.03em;
-    line-height: 0.95;
+    line-height: 1;
+    overflow-wrap: break-word;
+    text-wrap: balance;
   }
+
+  .reveal-up {
+    animation: reveal-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .photo-lightbox {
+    background: var(--ink);
+    display: none;
+    flex-direction: column;
+    inset: 0;
+    position: fixed;
+    z-index: 50;
+  }
+
+  .photo-lightbox:target {
+    display: flex;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0.01;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    animation: none;
+  }
+}
+
+body:has(#mobile-nav-toggle:checked),
+html:has(.photo-lightbox:target) {
+  overflow: hidden;
 }

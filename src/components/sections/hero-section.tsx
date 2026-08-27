@@ -1,16 +1,11 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Heart, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/constants";
 import type { SiteContent } from "@/lib/content";
 import type { GalleryPhoto } from "@/lib/gallery";
 import { cn } from "@/lib/utils";
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 export function HeroSection({
   content,
@@ -25,12 +20,7 @@ export function HeroSection({
     return (
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-2 lg:gap-12">
-          <motion.div
-            initial={{ y: 16 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, ease }}
-            className="flex flex-col items-start gap-5 sm:gap-6"
-          >
+          <div className="reveal-up flex flex-col items-start gap-5 sm:gap-6">
             <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-primary uppercase">
               {content.hero.subtitle}
             </p>
@@ -39,13 +29,8 @@ export function HeroSection({
               {content.hero.body}
             </p>
             <HeroActions donationUrl={donationUrl} onDark={false} />
-          </motion.div>
-          <motion.div
-            initial={{ y: 18 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.85, delay: 0.12, ease }}
-            className="flex justify-center lg:justify-end"
-          >
+          </div>
+          <div className="reveal-up flex justify-center [animation-delay:120ms] lg:justify-end">
             <Image
               src="/images/logo1.webp"
               alt={SITE.name}
@@ -54,7 +39,7 @@ export function HeroSection({
               preload
               className="w-full max-w-md rounded-[2rem] object-cover shadow-2xl"
             />
-          </motion.div>
+          </div>
         </div>
       </section>
     );
@@ -62,7 +47,7 @@ export function HeroSection({
 
   return (
     <section className="relative">
-      <div className="relative isolate h-[min(78svh,40rem)] min-h-[32rem] overflow-hidden bg-ink md:h-[calc(100svh-5rem)] md:min-h-[38rem]">
+      <div className="relative isolate min-h-[34rem] overflow-hidden bg-ink h-[min(86svh,42rem)] md:h-[calc(100svh-5rem)] md:min-h-[38rem]">
         <Image
           src={photo.src}
           alt={photo.caption || "FOUND IT! Thrift Store"}
@@ -72,13 +57,8 @@ export function HeroSection({
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/52 to-black/25" />
-        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-5 pt-24 pb-8 sm:px-8 sm:pb-16 md:pb-20">
-          <motion.div
-            initial={{ y: 18 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.85, ease }}
-            className="flex max-w-3xl flex-col items-start gap-4 sm:gap-6"
-          >
+        <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-5 pt-20 pb-8 sm:px-8 sm:pt-24 sm:pb-16 md:pb-20">
+          <div className="reveal-up flex max-w-3xl flex-col items-start gap-4 sm:gap-6">
             <Image
               src="/images/logo1.webp"
               alt=""
@@ -94,7 +74,7 @@ export function HeroSection({
               {content.hero.body}
             </p>
             <HeroActions donationUrl={donationUrl} onDark />
-          </motion.div>
+          </div>
         </div>
       </div>
       <div className="md:hidden">
