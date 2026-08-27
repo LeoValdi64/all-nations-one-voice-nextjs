@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { Container } from "@/components/layout/container";
+
 const sponsors = [
   {
     id: 1,
@@ -57,32 +60,36 @@ const sponsors = [
 
 export function SponsorsSection() {
   return (
-    <section className="bg-muted/40 px-4 py-16 sm:px-6">
-      <div className="mx-auto max-w-7xl">
-        <div className="text-center">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight">Our sponsors</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+    <section className="border-t bg-background">
+      <Container className="flex flex-col gap-8 py-14">
+        <div className="flex flex-col items-center gap-2 text-center">
+          <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
+            Community partners
+          </p>
+          <p className="max-w-lg text-sm text-muted-foreground">
             Neighbors and businesses who help this work stay open.
           </p>
         </div>
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-10">
+        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
           {sponsors.map((sponsor) => (
             <a
               key={sponsor.id}
               href={sponsor.url}
               target={sponsor.url === "#" ? undefined : "_blank"}
               rel={sponsor.url === "#" ? undefined : "noopener noreferrer"}
-              className="transition-transform hover:scale-105"
+              className="opacity-70 grayscale transition-[opacity,filter] duration-300 hover:opacity-100 hover:grayscale-0"
             >
-              <img
+              <Image
                 src={sponsor.image}
                 alt={sponsor.name}
-                className="max-h-28 w-auto object-contain"
+                width={160}
+                height={40}
+                className="h-10 w-auto object-contain"
               />
             </a>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

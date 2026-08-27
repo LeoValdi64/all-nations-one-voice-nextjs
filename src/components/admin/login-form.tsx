@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { SiteMark } from "@/components/brand/site-mark";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -29,13 +30,16 @@ export function LoginForm({ configured }: { configured: boolean }) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-cream px-4">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>{SITE.name} admin</CardTitle>
-          <CardDescription>
-            Edit website copy, store photos, classes, and registrations.
-          </CardDescription>
+        <CardHeader className="gap-4">
+          <SiteMark href="/" compact />
+          <div className="flex flex-col gap-1.5">
+            <CardTitle className="font-heading text-2xl">{SITE.name} admin</CardTitle>
+            <CardDescription>
+              Edit website copy, store photos, classes, and registrations.
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           {configured ? (
@@ -45,7 +49,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <Input id="password" name="password" type="password" required autoFocus />
                 </Field>
-                <Button type="submit" disabled={pending}>
+                <Button type="submit" size="lg" disabled={pending}>
                   {pending ? "Signing in…" : "Sign in"}
                 </Button>
               </FieldGroup>

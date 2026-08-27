@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -165,16 +166,20 @@ export function AdminDashboard({
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div>
-            <p className="font-heading text-lg font-semibold">{SITE.name} admin</p>
-            <p className="text-sm text-muted-foreground">
-              Storage: {persist === "blob" ? "Vercel Blob" : persist === "local" ? "local files" : "read-only seed"}
-            </p>
+    <div className="min-h-screen bg-cream">
+      <header className="border-b bg-card/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
+          <div className="flex items-center gap-4">
+            <Image src="/images/logo1.webp" alt="" width={44} height={44} className="size-11 rounded-2xl object-cover" />
+            <div>
+              <p className="font-heading text-lg font-medium">{SITE.name}</p>
+              <p className="text-sm text-muted-foreground">
+                Admin · {persist === "blob" ? "Vercel Blob" : persist === "local" ? "local files" : "read-only seed"}
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
+            <Badge variant="outline">{persist}</Badge>
             <Button asChild variant="outline">
               <Link href="/">View site</Link>
             </Button>
@@ -185,7 +190,7 @@ export function AdminDashboard({
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-8">
+      <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8">
         {persist === "readonly" ? (
           <Alert className="mb-6">
             <AlertDescription>
@@ -467,7 +472,7 @@ export function AdminDashboard({
                     .sort((a, b) => a.order - b.order)
                     .map((photo) => (
                       <div key={photo.id} className="flex flex-col gap-3 rounded-xl border p-3">
-                        <img src={photo.src} alt="" className="h-40 w-full rounded-lg object-cover" />
+                        <Image src={photo.src} alt="" width={640} height={160} className="h-40 w-full rounded-lg object-cover" />
                         <Input
                           value={photo.caption}
                           placeholder="Caption"

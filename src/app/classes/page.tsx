@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import OngLayout from "@/components/layout/ong-layout";
+import { PageIntro } from "@/components/layout/page-intro";
+import { Container } from "@/components/layout/container";
 import { RegisterDialog } from "@/components/classes/register-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,24 +25,21 @@ export default async function ClassesPage() {
 
   return (
     <OngLayout>
-      <section className="px-4 py-16 sm:px-6 lg:py-24">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
-          <h1 className="font-heading text-4xl font-semibold tracking-tight sm:text-6xl">Classes</h1>
-          <p className="text-lg text-muted-foreground">
-            When a class is scheduled, it appears here. Register online and we will follow up.
-          </p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Learn with us" title="Classes">
+        When a class is scheduled, it appears here. Register online and we will follow up.
+      </PageIntro>
 
-      <section className="px-4 pb-20 sm:px-6">
-        <div className="mx-auto max-w-5xl">
+      <section className="pb-20 sm:pb-28">
+        <Container className="max-w-3xl">
           {classes.length === 0 ? (
-            <Empty className="border">
+            <Empty className="border bg-card px-8 py-16">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <CalendarDays />
                 </EmptyMedia>
-                <EmptyTitle>No classes scheduled right now</EmptyTitle>
+                <EmptyTitle className="font-heading text-2xl font-medium">
+                  No classes scheduled right now
+                </EmptyTitle>
                 <EmptyDescription>
                   We will post classes here when they are ready. Until then, visit the store or
                   contact us if you need job-search help.
@@ -58,15 +57,17 @@ export default async function ClassesPage() {
               </EmptyContent>
             </Empty>
           ) : (
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               {classes.map((item) => {
                 const left = seatsLeft(item);
                 return (
                   <Card key={item.id}>
                     <CardHeader>
                       <div className="flex flex-wrap items-center gap-2">
-                        <CardTitle>{item.title}</CardTitle>
-                        {item.status === "cancelled" ? <Badge variant="destructive">Cancelled</Badge> : null}
+                        <CardTitle className="font-heading text-2xl font-medium">{item.title}</CardTitle>
+                        {item.status === "cancelled" ? (
+                          <Badge variant="destructive">Cancelled</Badge>
+                        ) : null}
                       </div>
                       <CardDescription>{formatClassWhen(item.startsAt, item.endsAt)}</CardDescription>
                     </CardHeader>
@@ -87,7 +88,7 @@ export default async function ClassesPage() {
               })}
             </div>
           )}
-        </div>
+        </Container>
       </section>
     </OngLayout>
   );

@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import OngLayout from "@/components/layout/ong-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Container, Eyebrow } from "@/components/layout/container";
+import { PageIntro } from "@/components/layout/page-intro";
+import { PhotoFrame } from "@/components/media/photo-frame";
+import { Reveal, RevealItem } from "@/components/motion/reveal";
+import { Separator } from "@/components/ui/separator";
 import { getPublicContent } from "@/lib/site-queries";
 
 export const dynamic = "force-dynamic";
@@ -23,76 +28,100 @@ export default async function AboutPage() {
 
   return (
     <OngLayout>
-      <section className="px-4 py-16 sm:px-6 lg:py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="font-heading text-4xl font-semibold tracking-tight sm:text-6xl">About us</h1>
-          <p className="mt-5 text-lg text-muted-foreground">{content.about.body}</p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Our story" title="About us">
+        {content.about.body}
+      </PageIntro>
 
-      <section className="px-4 pb-16 sm:px-6">
-        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 md:items-center">
-          <div>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight">Our story</h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+      <section className="pb-20 sm:pb-28">
+        <Container className="grid items-center gap-12 lg:grid-cols-12">
+          <Reveal className="flex flex-col gap-6 lg:col-span-6">
+            <Eyebrow>Federal Way, 2025</Eyebrow>
+            <h2 className="font-heading text-4xl leading-[0.95] font-medium tracking-tight">
+              Local work, a shared address.
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">
               All Nations One Voice began in 2025 in Federal Way. The work is local: sit with
               someone who needs a computer to look for a job, offer practical support, and keep
               FOUND IT! Thrift Store open at the same address.
             </p>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="text-lg leading-relaxed text-muted-foreground">
               We do not currently run GED or English classes. When a class is scheduled, it will
               appear on the Classes page so people can register.
             </p>
-          </div>
-          <img
-            src="/images/about.jpg"
-            alt="All Nations One Voice"
-            className="h-80 w-full rounded-xl object-cover ring-1 ring-foreground/10"
-          />
-        </div>
+          </Reveal>
+          <RevealItem className="lg:col-span-6" delay={0.08}>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl sm:aspect-[5/4]">
+              <Image
+                src="/images/about.jpg"
+                alt="All Nations One Voice"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-top"
+              />
+            </div>
+          </RevealItem>
+        </Container>
       </section>
 
-      <section className="bg-muted/40 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-center font-heading text-3xl font-semibold tracking-tight">Our values</h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {content.values.map((value) => (
-              <Card key={value.title}>
-                <CardHeader>
-                  <CardTitle>{value.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-muted-foreground">{value.body}</CardContent>
-              </Card>
+      <section className="border-y bg-card py-20 sm:py-28">
+        <Container className="flex flex-col gap-12">
+          <Reveal className="max-w-xl">
+            <Eyebrow>How we work</Eyebrow>
+            <h2 className="font-heading mt-4 text-4xl leading-[0.95] font-medium tracking-tight">
+              Our values
+            </h2>
+          </Reveal>
+          <div className="flex flex-col">
+            {content.values.map((value, index) => (
+              <RevealItem key={value.title} delay={index * 0.06}>
+                <div className="grid gap-4 py-8 md:grid-cols-12 md:items-start">
+                  <p className="font-heading text-2xl text-primary md:col-span-2">
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="font-heading text-2xl font-medium md:col-span-3">{value.title}</h3>
+                  <p className="leading-relaxed text-muted-foreground md:col-span-7">{value.body}</p>
+                </div>
+                {index < content.values.length - 1 ? <Separator /> : null}
+              </RevealItem>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      <section className="px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-center font-heading text-3xl font-semibold tracking-tight">Our team</h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((person) => (
-              <Card key={person.name} className="text-center">
-                <CardHeader className="items-center">
-                  {person.image ? (
-                    <img
-                      src={person.image}
-                      alt={person.name}
-                      className="size-28 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex size-28 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground">
-                      Photo
-                    </div>
-                  )}
-                  <CardTitle>{person.name}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-muted-foreground">{person.role}</CardContent>
-              </Card>
+      <section className="py-20 sm:py-28">
+        <Container className="flex flex-col gap-12">
+          <Reveal className="max-w-xl">
+            <Eyebrow>The people</Eyebrow>
+            <h2 className="font-heading mt-4 text-4xl leading-[0.95] font-medium tracking-tight">
+              Our team
+            </h2>
+          </Reveal>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((person, index) => (
+              <RevealItem key={person.name} delay={index * 0.06} className="flex flex-col gap-4">
+                {person.image ? (
+                  <PhotoFrame
+                    src={person.image}
+                    alt={person.name}
+                    sizes="(max-width: 640px) 100vw, 25vw"
+                    className="aspect-[4/5] rounded-2xl"
+                  />
+                ) : (
+                  <div className="bg-muted text-muted-foreground flex aspect-[4/5] items-center justify-center rounded-2xl font-heading text-4xl">
+                    {person.name
+                      .split(" ")
+                      .map((part) => part[0])
+                      .join("")}
+                  </div>
+                )}
+                <div className="flex flex-col gap-1">
+                  <p className="font-heading text-xl font-medium">{person.name}</p>
+                  <p className="text-sm text-muted-foreground">{person.role}</p>
+                </div>
+              </RevealItem>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
     </OngLayout>
   );

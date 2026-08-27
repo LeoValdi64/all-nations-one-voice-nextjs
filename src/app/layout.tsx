@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://allnationsonevoice.org"),
@@ -36,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en" className={cn("font-sans", manrope.variable, fraunces.variable)}>
       <head>
         <link rel="canonical" href="https://allnationsonevoice.org" />
       </head>
