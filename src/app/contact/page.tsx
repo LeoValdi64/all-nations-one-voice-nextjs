@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Contact All Nations One Voice in Federal Way. Office hours are by appointment. Visit FOUND IT! Thrift Store at the same address.",
+  alternates: { canonical: "/contact" },
 };
 
 const faqs = [
@@ -34,7 +35,11 @@ const faqs = [
   },
   {
     title: "Do you offer classes?",
-    body: "When a class is scheduled, it is listed on the Classes page with online registration. We do not currently advertise GED or English classes.",
+    body: "When a class is scheduled, it is listed on the Classes page with online registration. We do not currently run GED, English, or Education Access classes.",
+  },
+  {
+    title: "Where are your policies?",
+    body: "Terms and conditions and our privacy policy are linked in the footer. We welcome every neighbor. For a grant packet or donation receipt, email us.",
   },
 ];
 

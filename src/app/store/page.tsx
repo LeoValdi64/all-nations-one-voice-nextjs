@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "FOUND IT! Thrift Store",
   description:
     "Visit FOUND IT! Thrift Store in Federal Way. Shop and donate clothing and household goods. Same address as All Nations One Voice.",
+  alternates: { canonical: "/store" },
 };
 
 export default async function StorePage() {

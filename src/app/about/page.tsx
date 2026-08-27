@@ -7,6 +7,7 @@ import { Reveal, RevealItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SITE } from "@/lib/constants";
+import { ORG } from "@/lib/organization";
 import { getPublicContent } from "@/lib/site-queries";
 
 export const dynamic = "force-dynamic";
@@ -14,7 +15,8 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "About us",
   description:
-    "All Nations One Voice is a Federal Way nonprofit offering job-search help, support services, and FOUND IT! Thrift Store.",
+    "All Nations One Voice is a Federal Way nonprofit founded in 2025. Job-search help, support services, FOUND IT! Thrift Store, and our board.",
+  alternates: { canonical: "/about" },
 };
 
 const team = [
@@ -123,6 +125,50 @@ export default async function AboutPage() {
       </section>
 
       <section className="border-y bg-card py-16 sm:py-24">
+        <Container className="grid items-start gap-10 lg:grid-cols-12">
+          <Reveal className="flex flex-col gap-4 lg:col-span-5">
+            <Eyebrow>For neighbors and partners</Eyebrow>
+            <h2 className="display-title-md">Organization snapshot</h2>
+            <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+              A short, truthful picture of who we are. Email us if you need a grant packet, a
+              donation receipt, or documents we should not publish on the open web.
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="h-12">
+                <a href={ORG.funderEmailHref}>Email about support</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12">
+                <Link href="/contact">Contact</Link>
+              </Button>
+            </div>
+          </Reveal>
+          <RevealItem className="grid gap-4 sm:grid-cols-2 lg:col-span-7" delay={0.06}>
+            {[
+              { label: "Legal name", value: ORG.legalName },
+              { label: "Founded", value: String(ORG.foundedYear) },
+              { label: "Service area", value: ORG.serviceArea },
+              { label: "Address", value: SITE.fullAddress },
+              { label: "Current programs", value: "Job-search help, support services, FOUND IT! Thrift Store" },
+              {
+                label: "Not currently offered",
+                value: ORG.programsNotOffered.join(" · "),
+              },
+            ].map((item) => (
+              <div key={item.label} className="rounded-2xl bg-background p-5 ring-1 ring-foreground/8">
+                <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-primary uppercase">
+                  {item.label}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/85">{item.value}</p>
+              </div>
+            ))}
+          </RevealItem>
+        </Container>
+        <Container className="pt-10">
+          <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">{ORG.nondiscrimination}</p>
+        </Container>
+      </section>
+
+      <section className="py-16 sm:py-24">
         <Container className="flex flex-col gap-10">
           <Reveal className="flex max-w-2xl flex-col gap-4">
             <Eyebrow>FOUND IT!</Eyebrow>
@@ -152,7 +198,7 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-24">
+      <section className="border-y bg-card py-16 sm:py-24">
         <Container className="flex flex-col gap-10">
           <Reveal className="max-w-2xl">
             <Eyebrow>In the neighborhood</Eyebrow>
@@ -178,7 +224,7 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="border-y bg-card py-16 sm:py-24">
+      <section className="py-16 sm:py-24">
         <Container className="flex flex-col gap-12">
           <Reveal className="max-w-xl">
             <Eyebrow>How we work</Eyebrow>

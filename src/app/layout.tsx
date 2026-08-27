@@ -39,24 +39,28 @@ export const metadata: Metadata = {
     "nonprofit",
     "thrift store",
   ],
-  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
     title: "All Nations One Voice",
     description:
-      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way.",
+      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way, Washington.",
     type: "website",
     locale: "en_US",
     siteName: "All Nations One Voice",
     url: "https://allnationsonevoice.org",
-    images: [{ url: "/images/logo1.webp", alt: "All Nations One Voice" }],
+    images: [
+      {
+        url: "/images/store/anv-2026-18-storefront.jpg",
+        alt: "Neighbors outside FOUND IT! Thrift Store in Federal Way",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "All Nations One Voice",
     description:
-      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way.",
-    images: ["/images/logo1.webp"],
+      "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way, Washington.",
+    images: ["/images/store/anv-2026-18-storefront.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
