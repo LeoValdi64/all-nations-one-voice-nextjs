@@ -59,13 +59,15 @@ export function HeroSection({
         <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/52 to-black/25" />
         <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-end px-5 pt-20 pb-8 sm:px-8 sm:pt-24 sm:pb-16 md:pb-20">
           <div className="reveal-up flex max-w-3xl flex-col items-start gap-4 sm:gap-6">
-            <Image
-              src="/images/logo1.webp"
-              alt=""
-              width={88}
-              height={88}
-              className="size-14 rounded-2xl object-cover shadow-lg ring-1 ring-background/20 sm:size-20"
-            />
+            <div className="rounded-[1.35rem] bg-cream p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-1 ring-white/80 sm:rounded-[1.6rem] sm:p-2">
+              <Image
+                src="/images/logo1.webp"
+                alt=""
+                width={88}
+                height={88}
+                className="size-14 rounded-[1.05rem] object-cover sm:size-20 sm:rounded-[1.2rem]"
+              />
+            </div>
             <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-primary uppercase">
               {content.hero.subtitle}
             </p>
