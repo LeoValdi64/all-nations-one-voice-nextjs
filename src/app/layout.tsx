@@ -6,13 +6,13 @@ import "./globals.css";
 
 const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-manrope",
   display: "swap",
 });
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -46,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("font-sans", manrope.variable, fraunces.variable)}>
+    <html lang="en" className={cn(manrope.className, manrope.variable, fraunces.variable)}>
       <head>
         <link rel="canonical" href="https://allnationsonevoice.org" />
       </head>

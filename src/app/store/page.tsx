@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container, Eyebrow } from "@/components/layout/container";
 import OngLayout from "@/components/layout/ong-layout";
+import { PhotoFrame } from "@/components/media/photo-frame";
 import { Reveal } from "@/components/motion/reveal";
 import { StoreGallery } from "@/components/store/store-gallery";
 import { VisitCard } from "@/components/store/visit-card";
@@ -20,13 +21,25 @@ export const metadata: Metadata = {
 export default async function StorePage() {
   const [content, photos] = await Promise.all([getPublicContent(), getPublicGallery()]);
   const featured = pickHeroPhoto(photos);
-  const gallery = featured
-    ? [featured, ...cinematicPhotos(photos).filter((photo) => photo.id !== featured.id)]
+  const rest = featured
+    ? cinematicPhotos(photos).filter((photo) => photo.id !== featured.id)
     : photos;
 
   return (
     <OngLayout>
-      <section className="pt-16 pb-6 sm:pt-24">
+      {featured ? (
+        <div className="px-5 pt-6 sm:px-8">
+          <PhotoFrame
+            src={featured.src}
+            alt={featured.caption || SITE.storeName}
+            sizes="100vw"
+            preload
+            className="aspect-[16/9] rounded-2xl sm:aspect-[21/9]"
+          />
+        </div>
+      ) : null}
+
+      <section className="pt-12 pb-6 sm:pt-16">
         <Container>
           <Reveal className="flex max-w-3xl flex-col gap-5">
             <Eyebrow>All Nations One Voice</Eyebrow>
@@ -44,7 +57,7 @@ export default async function StorePage() {
       <section className="pb-20 sm:pb-28">
         <Container className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20.5rem]">
           <div className="flex flex-col gap-12">
-            <StoreGallery photos={gallery} />
+            <StoreGallery photos={rest} />
 
             <Card className="overflow-hidden py-0">
               <CardHeader className="pt-6">

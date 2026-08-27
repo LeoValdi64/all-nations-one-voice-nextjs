@@ -13,7 +13,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { SITE } from "@/lib/constants";
 import type { SiteContent } from "@/lib/content";
@@ -78,11 +77,16 @@ export function SiteHeader({ content }: { content: SiteContent }) {
             </Button>
 
             <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="lg:hidden" aria-label="Open menu">
-                  <Menu />
-                </Button>
-              </SheetTrigger>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="lg:hidden"
+                aria-label="Open menu"
+                onClick={() => setOpen(true)}
+              >
+                <Menu />
+              </Button>
               <SheetContent side="right" className="w-[min(100%,22rem)] gap-0 bg-cream">
                 <SheetHeader className="px-6 pt-6">
                   <SheetTitle className="sr-only">{SITE.name}</SheetTitle>

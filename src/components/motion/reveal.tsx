@@ -13,10 +13,10 @@ export function Reveal({
 }: HTMLMotionProps<"div"> & { delay?: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.8, delay, ease }}
+      initial={{ y: 18 }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, delay, ease }}
       className={cn(className)}
       {...props}
     >
@@ -33,10 +33,10 @@ export function RevealItem({
 }: HTMLMotionProps<"div"> & { delay?: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-8% 0px" }}
-      transition={{ duration: 0.7, delay, ease }}
+      initial={{ y: 14 }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.65, delay, ease }}
       className={cn(className)}
       {...props}
     >

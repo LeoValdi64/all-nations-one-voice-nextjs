@@ -52,6 +52,8 @@
 }
 
 :root {
+  --font-sans: "Manrope", "Manrope Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Fraunces", "Fraunces Fallback", ui-serif, Georgia, serif;
   --cream: #f8f5ef;
   --brand: #5bbc47;
   --ink: #241e16;
@@ -128,17 +130,26 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply font-sans scroll-smooth;
+    scroll-behavior: smooth;
+    font-family: "Manrope", "Manrope Fallback", ui-sans-serif, system-ui, sans-serif;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Manrope", "Manrope Fallback", ui-sans-serif, system-ui, sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-heading {
+    font-family: "Fraunces", "Fraunces Fallback", ui-serif, Georgia, serif;
+    font-optical-sizing: auto;
   }
   h1,
   h2,
   h3,
   h4 {
-    @apply font-heading font-medium tracking-tight;
-    font-optical-sizing: auto;
+    @apply font-medium tracking-tight;
   }
   ::selection {
     background: color-mix(in oklch, var(--accent) 28%, white);
