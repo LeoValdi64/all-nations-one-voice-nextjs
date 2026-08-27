@@ -61,7 +61,7 @@ export function LoginForm({ configured, failed = false }: { configured: boolean;
             </form>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Set the ADMIN_PASSWORD environment variable on Vercel before this login can work.
+              Admin login is not configured yet.
             </p>
           )}
         </CardContent>

@@ -1,4 +1,4 @@
-import { getAdminPassword, isAdmin } from "@/lib/auth";
+import { isAdmin, isAdminConfigured } from "@/lib/auth";
 import { persistHint } from "@/lib/storage";
 import { LoginForm } from "@/components/admin/login-form";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
@@ -15,7 +15,7 @@ export default async function AdminPage({
   const admin = await isAdmin();
   if (!admin) {
     const params = await searchParams;
-    return <LoginForm configured={Boolean(getAdminPassword())} failed={params.error === "1"} />;
+    return <LoginForm configured={isAdminConfigured()} failed={params.error === "1"} />;
   }
 
   const [content, photos, classes, registrations] = await Promise.all([
