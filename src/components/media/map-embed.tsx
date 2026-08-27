@@ -12,6 +12,7 @@ export function MapEmbed({
     <iframe
       title={title}
       src={SITE.mapsEmbed}
+      allowFullScreen
       className={cn("h-72 w-full border-0 sm:h-[380px]", className)}
       loading="lazy"
       referrerPolicy="no-referrer-when-downgrade"
