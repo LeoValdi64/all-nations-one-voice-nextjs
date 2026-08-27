@@ -60,7 +60,7 @@ export function StoreGallery({ photos }: { photos: GalleryPhoto[] }) {
 
       {active ? (
         <div
-          className="fixed inset-0 z-50 flex flex-col bg-ink/96"
+          className="fixed inset-0 z-50 flex flex-col bg-ink"
           role="dialog"
           aria-modal="true"
           aria-label={active.caption || "Store photo"}
