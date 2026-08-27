@@ -141,6 +141,14 @@ export function SiteHeader({ content }: { content: SiteContent }) {
               Facebook
             </a>
           </Button>
+          <div className="flex gap-4 pt-1 text-sm text-muted-foreground">
+            <Link href="/terms" onClick={closeMobileNav} className="inline-flex min-h-11 items-center">
+              Terms
+            </Link>
+            <Link href="/privacy" onClick={closeMobileNav} className="inline-flex min-h-11 items-center">
+              Privacy
+            </Link>
+          </div>
         </div>
       </div>
     </>

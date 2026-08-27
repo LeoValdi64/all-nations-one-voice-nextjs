@@ -17,7 +17,9 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Classes",
-  description: "See upcoming classes from All Nations One Voice and register online.",
+  description:
+    "Upcoming classes from All Nations One Voice. We do not currently run GED or English classes.",
+  alternates: { canonical: "/classes" },
 };
 
 export default async function ClassesPage({
@@ -31,7 +33,8 @@ export default async function ClassesPage({
   return (
     <OngLayout>
       <PageIntro eyebrow="Learn with us" title="Classes">
-        When a class is scheduled, it appears here. Register online and we will follow up.
+        When a class is scheduled, it appears here. Register online and we will follow up. We do
+        not currently advertise GED, English, or Education Access classes.
       </PageIntro>
       {params.registered === "1" ? (
         <Container className="max-w-3xl pb-6">

@@ -16,6 +16,11 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const legalLinks = [
+  { href: "/terms", label: "Terms" },
+  { href: "/privacy", label: "Privacy" },
+];
+
 export function SiteFooter({ content }: { content: SiteContent }) {
   const donationUrl = content.links.donation || SITE.donationUrl;
   const facebook = content.links.facebook || SITE.facebook;
@@ -86,6 +91,15 @@ export function SiteFooter({ content }: { content: SiteContent }) {
                   {link.label}
                 </Link>
               ))}
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="inline-flex min-h-11 items-center text-sm text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -122,10 +136,23 @@ export function SiteFooter({ content }: { content: SiteContent }) {
         </Container>
 
         <Separator />
-        <Container className="flex flex-col items-center justify-between gap-3 py-6 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
-          <p>
-            © {year} {SITE.name}. All rights reserved.
-          </p>
+        <Container className="flex flex-col items-center justify-between gap-4 py-6 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
+          <div className="flex flex-col gap-2">
+            <p>
+              © {year} {SITE.name}. All rights reserved.
+            </p>
+            <p className="max-w-xl text-xs leading-relaxed">
+              We welcome every neighbor. See our{" "}
+              <Link href="/terms" className="text-foreground underline-offset-4 hover:underline">
+                terms
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="text-foreground underline-offset-4 hover:underline">
+                privacy policy
+              </Link>
+              .
+            </p>
+          </div>
           <p>
             Site by{" "}
             <a

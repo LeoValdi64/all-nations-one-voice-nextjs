@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { Container, Eyebrow } from "@/components/layout/container";
+import { PhotoFrame } from "@/components/media/photo-frame";
 import { Reveal, RevealItem } from "@/components/motion/reveal";
-import { ServiceIcon } from "@/components/icons/service-icon";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SiteContent } from "@/lib/content";
+import { ORG } from "@/lib/organization";
 
 export function MissionSection({ content }: { content: SiteContent }) {
   return (
@@ -18,29 +20,39 @@ export function MissionSection({ content }: { content: SiteContent }) {
         </Reveal>
 
         <div className="grid gap-5 lg:grid-cols-3">
-          {content.services.map((service, index) => (
-            <RevealItem key={service.id} delay={index * 0.08}>
-              <Card className="h-full py-7">
-                <CardHeader className="gap-5">
-                  <div className="flex items-center justify-between">
-                    <span className="font-heading text-3xl text-primary/80">
+          {ORG.programsCurrent.map((program, index) => {
+            const service = content.services.find((item) => item.id === program.id);
+            return (
+              <RevealItem key={program.id} delay={index * 0.08}>
+                <Card className="h-full pt-0">
+                  <PhotoFrame
+                    src={program.image}
+                    alt={program.imageAlt}
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="aspect-[4/3] rounded-none"
+                  />
+                  <CardHeader className="gap-3 pt-1">
+                    <p className="font-heading text-3xl text-primary/80">
                       {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="flex size-10 items-center justify-center rounded-full bg-secondary text-foreground">
-                      <ServiceIcon name={service.icon} />
-                    </span>
-                  </div>
-                  <Separator />
-                  <CardTitle className="font-heading text-2xl font-medium">
-                    {service.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="leading-relaxed text-muted-foreground">{service.description}</p>
-                </CardContent>
-              </Card>
-            </RevealItem>
-          ))}
+                    </p>
+                    <CardTitle className="font-heading text-2xl font-medium">
+                      {service?.title || program.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="leading-relaxed text-muted-foreground">
+                      {service?.description || program.summary}
+                    </p>
+                  </CardContent>
+                  <CardFooter className="border-0 bg-transparent">
+                    <Button asChild variant="outline" className="h-11 w-full">
+                      <Link href={program.href}>{program.cta}</Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </RevealItem>
+            );
+          })}
         </div>
       </Container>
     </section>
