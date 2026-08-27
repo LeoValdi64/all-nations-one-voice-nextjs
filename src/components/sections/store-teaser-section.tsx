@@ -10,18 +10,16 @@ import { cn } from "@/lib/utils";
 
 export function StoreTeaserSection({ photos }: { photos: GalleryPhoto[] }) {
   return (
-    <section className="py-20 sm:py-28">
-      <Container className="grid items-center gap-12 lg:grid-cols-12">
+    <section className="py-16 sm:py-28">
+      <Container className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
         <Reveal className="flex flex-col gap-6 lg:col-span-5">
           <Eyebrow>{SITE.storeName}</Eyebrow>
-          <h2 className="font-heading text-4xl leading-[0.95] font-medium tracking-tight sm:text-5xl">
-            A neighborhood shop, not a cart.
-          </h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">
+          <h2 className="display-title-md">A neighborhood shop, not a cart.</h2>
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             Shop and donate clothing and household goods at the same address as our office. This is
             a promotional page — inventory lives on the floor in Federal Way.
           </p>
-          <Button asChild className="w-fit" size="lg">
+          <Button asChild className="h-12 w-full sm:w-fit" size="lg">
             <Link href="/store">
               See the store
               <ArrowUpRight data-icon="inline-end" />

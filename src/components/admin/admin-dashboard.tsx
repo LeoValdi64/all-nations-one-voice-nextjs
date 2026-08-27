@@ -168,22 +168,22 @@ export function AdminDashboard({
   return (
     <div className="min-h-screen bg-cream">
       <header className="border-b bg-card/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-          <div className="flex items-center gap-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-4 sm:px-8">
+          <div className="flex min-w-0 items-center gap-3">
             <Image src="/images/logo1.webp" alt="" width={44} height={44} className="size-11 rounded-2xl object-cover" />
-            <div>
+            <div className="min-w-0">
               <p className="font-heading text-lg font-medium">{SITE.name}</p>
               <p className="text-sm text-muted-foreground">
                 Admin · {persist === "blob" ? "Vercel Blob" : persist === "local" ? "local files" : "read-only seed"}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Badge variant="outline">{persist}</Badge>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="h-11">
               <Link href="/">View site</Link>
             </Button>
-            <Button variant="ghost" onClick={logout}>
+            <Button variant="ghost" className="h-11" onClick={logout}>
               Sign out
             </Button>
           </div>
@@ -438,6 +438,19 @@ export function AdminDashboard({
                       }
                     />
                   </Field>
+                  <Field>
+                    <FieldLabel htmlFor="donation">Donation URL</FieldLabel>
+                    <Input
+                      id="donation"
+                      value={content.links.donation}
+                      onChange={(event) =>
+                        setContent({
+                          ...content,
+                          links: { ...content.links, donation: event.target.value },
+                        })
+                      }
+                    />
+                  </Field>
                   <Button onClick={saveContent} disabled={saving}>
                     {saving ? "Saving…" : "Save hours"}
                   </Button>
@@ -581,13 +594,14 @@ export function AdminDashboard({
               <CardContent className="flex flex-col gap-4">
                 <Button
                   variant="outline"
-                  className="w-fit"
+                  className="h-11 w-fit"
                   onClick={() => {
                     window.location.href = "/api/registrations/export";
                   }}
                 >
                   Export CSV
                 </Button>
+                <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -625,6 +639,7 @@ export function AdminDashboard({
                     ))}
                   </TableBody>
                 </Table>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

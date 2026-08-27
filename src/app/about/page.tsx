@@ -11,7 +11,7 @@ import { getPublicContent } from "@/lib/site-queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "About Us | All Nations One Voice",
+  title: "About us",
   description:
     "All Nations One Voice is a Federal Way nonprofit offering job-search help, support services, and FOUND IT! Thrift Store.",
 };
@@ -36,10 +36,8 @@ export default async function AboutPage() {
         <Container className="grid items-center gap-12 lg:grid-cols-12">
           <Reveal className="flex flex-col gap-6 lg:col-span-6">
             <Eyebrow>Federal Way, 2025</Eyebrow>
-            <h2 className="font-heading text-4xl leading-[0.95] font-medium tracking-tight">
-              Local work, a shared address.
-            </h2>
-            <p className="text-lg leading-relaxed text-muted-foreground">
+            <h2 className="display-title-md">Local work, a shared address.</h2>
+            <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
               All Nations One Voice began in 2025 in Federal Way. The work is local: sit with
               someone who needs a computer to look for a job, offer practical support, and keep
               FOUND IT! Thrift Store open at the same address.
@@ -67,9 +65,7 @@ export default async function AboutPage() {
         <Container className="flex flex-col gap-12">
           <Reveal className="max-w-xl">
             <Eyebrow>How we work</Eyebrow>
-            <h2 className="font-heading mt-4 text-4xl leading-[0.95] font-medium tracking-tight">
-              Our values
-            </h2>
+            <h2 className="display-title-md mt-4">Our values</h2>
           </Reveal>
           <div className="flex flex-col">
             {content.values.map((value, index) => (
@@ -92,9 +88,7 @@ export default async function AboutPage() {
         <Container className="flex flex-col gap-12">
           <Reveal className="max-w-xl">
             <Eyebrow>The people</Eyebrow>
-            <h2 className="font-heading mt-4 text-4xl leading-[0.95] font-medium tracking-tight">
-              Our team
-            </h2>
+            <h2 className="display-title-md mt-4">Our team</h2>
           </Reveal>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((person, index) => (

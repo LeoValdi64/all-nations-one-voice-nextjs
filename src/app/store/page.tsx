@@ -6,6 +6,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { StoreGallery } from "@/components/store/store-gallery";
 import { VisitCard } from "@/components/store/visit-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapEmbed } from "@/components/media/map-embed";
 import { SITE } from "@/lib/constants";
 import { cinematicPhotos, pickHeroPhoto } from "@/lib/photos";
 import { getPublicContent, getPublicGallery } from "@/lib/site-queries";
@@ -13,7 +14,7 @@ import { getPublicContent, getPublicGallery } from "@/lib/site-queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "FOUND IT! Thrift Store | All Nations One Voice",
+  title: "FOUND IT! Thrift Store",
   description:
     "Visit FOUND IT! Thrift Store in Federal Way. Shop and donate clothing and household goods. Same address as All Nations One Voice.",
 };
@@ -28,25 +29,23 @@ export default async function StorePage() {
   return (
     <OngLayout>
       {featured ? (
-        <div className="px-5 pt-6 sm:px-8">
+        <div className="sm:px-8 sm:pt-6">
           <PhotoFrame
             src={featured.src}
             alt={featured.caption || SITE.storeName}
             sizes="100vw"
             preload
-            className="aspect-[16/9] rounded-2xl sm:aspect-[21/9]"
+            className="aspect-[4/5] rounded-none sm:aspect-[21/9] sm:rounded-2xl"
           />
         </div>
       ) : null}
 
-      <section className="pt-12 pb-6 sm:pt-16">
+      <section className="pt-10 pb-6 sm:pt-16">
         <Container>
-          <Reveal className="flex max-w-3xl flex-col gap-5">
+          <Reveal className="flex max-w-3xl flex-col gap-4 sm:gap-5">
             <Eyebrow>All Nations One Voice</Eyebrow>
-            <h1 className="font-heading text-5xl leading-[0.95] font-medium tracking-tight sm:text-7xl">
-              {SITE.storeName}
-            </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            <h1 className="display-title">{SITE.storeName}</h1>
+            <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               A community thrift store in Federal Way. Come shop, donate items, and see the space.
               This page is here so people know the store exists — it is not an online cart.
             </p>
@@ -55,8 +54,15 @@ export default async function StorePage() {
       </section>
 
       <section className="pb-20 sm:pb-28">
-        <Container className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20.5rem]">
-          <div className="flex flex-col gap-12">
+        <Container className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_20.5rem] lg:gap-10">
+          <VisitCard
+            className="lg:col-start-2 lg:row-start-1"
+            hours={content.storeHours}
+            mapsUrl={content.links.maps || SITE.mapsShare}
+            facebook={content.links.facebook || SITE.facebook}
+          />
+
+          <div className="flex flex-col gap-12 lg:col-start-1 lg:row-start-1">
             <StoreGallery photos={rest} />
 
             <Card className="overflow-hidden py-0">
@@ -65,22 +71,10 @@ export default async function StorePage() {
                 <CardDescription>{SITE.fullAddress}</CardDescription>
               </CardHeader>
               <CardContent className="px-0 pb-0">
-                <iframe
-                  title="FOUND IT! Thrift Store map"
-                  src={SITE.mapsEmbed}
-                  className="h-[380px] w-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                <MapEmbed title="FOUND IT! Thrift Store map" />
               </CardContent>
             </Card>
           </div>
-
-          <VisitCard
-            hours={content.storeHours}
-            mapsUrl={content.links.maps || SITE.mapsShare}
-            facebook={content.links.facebook || SITE.facebook}
-          />
         </Container>
       </section>
     </OngLayout>

@@ -16,7 +16,7 @@ import { getPublishedClasses } from "@/lib/site-queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Classes | All Nations One Voice",
+  title: "Classes",
   description: "See upcoming classes from All Nations One Voice and register online.",
 };
 
@@ -32,12 +32,12 @@ export default async function ClassesPage() {
       <section className="pb-20 sm:pb-28">
         <Container className="max-w-3xl">
           {classes.length === 0 ? (
-            <Empty className="border bg-card px-8 py-16">
+            <Empty className="border bg-card px-6 py-14 sm:px-8 sm:py-16">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <CalendarDays />
                 </EmptyMedia>
-                <EmptyTitle className="font-heading text-2xl font-medium">
+                <EmptyTitle className="font-heading text-2xl font-medium sm:text-3xl">
                   No classes scheduled right now
                 </EmptyTitle>
                 <EmptyDescription>
@@ -46,11 +46,11 @@ export default async function ClassesPage() {
                 </EmptyDescription>
               </EmptyHeader>
               <EmptyContent>
-                <div className="flex flex-col gap-2 sm:flex-row">
-                  <Button asChild>
+                <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+                  <Button asChild className="h-11">
                     <Link href="/contact">Contact us</Link>
                   </Button>
-                  <Button asChild variant="outline">
+                  <Button asChild variant="outline" className="h-11">
                     <Link href="/store">Visit the store</Link>
                   </Button>
                 </div>

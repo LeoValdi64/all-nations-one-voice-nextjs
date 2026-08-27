@@ -15,9 +15,7 @@ export function UpcomingClassesSection({ classes }: { classes: ClassWithCounts[]
         <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="flex max-w-xl flex-col gap-4">
             <Eyebrow>Learn with us</Eyebrow>
-            <h2 className="font-heading text-4xl leading-[0.95] font-medium tracking-tight sm:text-5xl">
-              Upcoming classes
-            </h2>
+            <h2 className="display-title-md">Upcoming classes</h2>
             <p className="text-muted-foreground">
               Register online. We will follow up by email or phone.
             </p>

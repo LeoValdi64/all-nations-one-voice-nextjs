@@ -41,8 +41,8 @@ export function SiteHeader({ content }: { content: SiteContent }) {
       ) : null}
 
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-          <SiteMark compact />
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] sm:h-20 sm:px-8">
+          <SiteMark compact wordmark="desktop" />
 
           <nav className="hidden items-center gap-7 lg:flex">
             {navLinks.map((link) => {
@@ -52,7 +52,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "group relative py-1 text-[0.72rem] font-semibold tracking-[0.16em] uppercase transition-colors",
+                    "group relative py-2 text-[0.72rem] font-semibold tracking-[0.16em] uppercase transition-colors",
                     active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                   )}
                 >
@@ -69,7 +69,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button asChild className="hidden sm:inline-flex">
+            <Button asChild className="h-11 px-3.5 sm:px-4">
               <a href={donationUrl} target="_blank" rel="noopener noreferrer">
                 <Heart data-icon="inline-start" />
                 Donate
@@ -80,15 +80,18 @@ export function SiteHeader({ content }: { content: SiteContent }) {
               <Button
                 type="button"
                 variant="outline"
-                size="icon"
+                size="icon-lg"
                 className="lg:hidden"
                 aria-label="Open menu"
                 onClick={() => setOpen(true)}
               >
                 <Menu />
               </Button>
-              <SheetContent side="right" className="w-[min(100%,22rem)] gap-0 bg-cream">
-                <SheetHeader className="px-6 pt-6">
+              <SheetContent
+                side="right"
+                className="w-full max-w-none gap-0 bg-cream p-0 sm:max-w-none data-[side=right]:w-full"
+              >
+                <SheetHeader className="px-6 pt-[max(1.5rem,env(safe-area-inset-top))]">
                   <SheetTitle className="sr-only">{SITE.name}</SheetTitle>
                   <SheetDescription className="sr-only">
                     Site navigation for {SITE.name}
@@ -96,7 +99,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
                   <SiteMark href="/" compact />
                 </SheetHeader>
                 <Separator />
-                <nav className="flex flex-1 flex-col justify-center gap-1 px-6 py-8">
+                <nav className="flex flex-1 flex-col justify-center gap-1 px-6 py-6">
                   {navLinks.map((link) => {
                     const active = pathname === link.href;
                     return (
@@ -105,7 +108,7 @@ export function SiteHeader({ content }: { content: SiteContent }) {
                         href={link.href}
                         onClick={() => setOpen(false)}
                         className={cn(
-                          "font-heading py-2 text-3xl leading-none tracking-tight transition-colors",
+                          "font-heading flex min-h-14 items-center text-4xl leading-none tracking-tight transition-colors",
                           active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                         )}
                       >
@@ -114,14 +117,19 @@ export function SiteHeader({ content }: { content: SiteContent }) {
                     );
                   })}
                 </nav>
-                <div className="flex flex-col gap-3 px-6 pb-8">
-                  <Button asChild size="lg">
+                <div className="flex flex-col gap-3 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {SITE.addressLine1}
+                    <br />
+                    {SITE.cityLine}
+                  </p>
+                  <Button asChild size="lg" className="h-12">
                     <a href={donationUrl} target="_blank" rel="noopener noreferrer">
                       <Heart data-icon="inline-start" />
                       Donate
                     </a>
                   </Button>
-                  <Button asChild size="lg" variant="outline">
+                  <Button asChild size="lg" variant="outline" className="h-12">
                     <a href={facebook} target="_blank" rel="noopener noreferrer">
                       Facebook
                     </a>

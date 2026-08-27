@@ -54,7 +54,7 @@ export function RegisterDialog({ item }: { item: ClassWithCounts }) {
       <DialogTrigger asChild>
         <Button disabled={!openClass}>{openClass ? "Register" : "Registration closed"}</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[min(90dvh,40rem)] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Register for {item.title}</DialogTitle>
           <DialogDescription>

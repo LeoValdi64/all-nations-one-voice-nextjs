@@ -11,7 +11,6 @@ import { getPublicContent, getPublicGallery, getUpcomingPublishedClasses } from 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "All Nations One Voice | Federal Way nonprofit",
   description:
     "Job-search help, support services, and FOUND IT! Thrift Store in Federal Way, Washington.",
 };

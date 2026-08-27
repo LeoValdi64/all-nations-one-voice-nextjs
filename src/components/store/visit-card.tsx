@@ -3,18 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { SITE } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 export function VisitCard({
   hours,
   mapsUrl,
   facebook,
+  className,
 }: {
   hours: string;
   mapsUrl: string;
   facebook: string;
+  className?: string;
 }) {
   return (
-    <Card className="lg:sticky lg:top-28">
+    <Card className={cn("lg:sticky lg:top-28", className)}>
       <CardHeader>
         <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-primary uppercase">
           Plan a visit
@@ -42,19 +45,19 @@ export function VisitCard({
             <a href={SITE.phoneHref} className="hover:text-primary">
               {SITE.phone}
             </a>
-            <a href={SITE.emailHref} className="hover:text-primary">
+            <a href={SITE.emailHref} className="break-all hover:text-primary">
               {SITE.email}
             </a>
           </div>
         </div>
       </CardContent>
       <CardFooter className="flex-col items-stretch gap-2">
-        <Button asChild>
+        <Button asChild className="h-11">
           <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
             Get directions
           </a>
         </Button>
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="h-11">
           <a href={facebook} target="_blank" rel="noopener noreferrer">
             Facebook
           </a>

@@ -30,21 +30,19 @@ export function SiteFooter({ content }: { content: SiteContent }) {
           <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-primary uppercase">
             Federal Way
           </p>
-          <h2 className="max-w-3xl font-heading text-4xl leading-[0.95] font-medium tracking-tight sm:text-6xl">
-            Visit, donate, or ask for help.
-          </h2>
+          <h2 className="display-title max-w-3xl text-background">Visit, donate, or ask for help.</h2>
           <p className="max-w-xl text-base leading-relaxed text-background/72">
             FOUND IT! Thrift Store and our support desk share one address. Come by, give online, or
             send a real message — we will answer.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <Button asChild size="lg" className="h-12">
               <a href={donationUrl} target="_blank" rel="noopener noreferrer">
                 <Heart data-icon="inline-start" />
                 Donate now
               </a>
             </Button>
-            <Button asChild size="lg" variant="secondary">
+            <Button asChild size="lg" variant="secondary" className="h-12">
               <Link href="/contact">Contact us</Link>
             </Button>
           </div>
@@ -88,7 +86,10 @@ export function SiteFooter({ content }: { content: SiteContent }) {
               Visit
             </p>
             <p className="text-sm leading-relaxed text-foreground/80">{SITE.fullAddress}</p>
-            <a className="text-sm text-foreground/80 hover:text-foreground" href={SITE.emailHref}>
+            <a
+              className="text-sm break-all text-foreground/80 hover:text-foreground"
+              href={SITE.emailHref}
+            >
               {SITE.email}
             </a>
             <a className="text-sm text-foreground/80 hover:text-foreground" href={SITE.phoneHref}>

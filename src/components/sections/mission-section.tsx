@@ -7,14 +7,14 @@ import type { SiteContent } from "@/lib/content";
 
 export function MissionSection({ content }: { content: SiteContent }) {
   return (
-    <section id="mission" className="py-20 sm:py-28">
-      <Container className="flex flex-col gap-14">
-        <Reveal className="mx-auto flex max-w-2xl flex-col items-center gap-5 text-center">
+    <section id="mission" className="py-16 sm:py-28">
+      <Container className="flex flex-col gap-10 sm:gap-14">
+        <Reveal className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center sm:gap-5">
           <Eyebrow>What we do</Eyebrow>
-          <h2 className="font-heading text-4xl leading-[0.95] font-medium tracking-tight sm:text-5xl">
-            {content.mission.title}
-          </h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">{content.mission.body}</p>
+          <h2 className="display-title-md">{content.mission.title}</h2>
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {content.mission.body}
+          </p>
         </Reveal>
 
         <div className="grid gap-5 lg:grid-cols-3">

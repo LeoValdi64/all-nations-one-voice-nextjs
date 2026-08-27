@@ -7,11 +7,13 @@ export function SiteMark({
   href = "/",
   compact = false,
   invert = false,
+  wordmark = "always",
   className,
 }: {
   href?: string;
   compact?: boolean;
   invert?: boolean;
+  wordmark?: "always" | "desktop";
   className?: string;
 }) {
   const mark = (
@@ -23,7 +25,7 @@ export function SiteMark({
         height={80}
         className={cn("rounded-2xl object-cover", compact ? "size-11" : "size-14")}
       />
-      <span className="flex min-w-0 flex-col">
+      <span className={cn("min-w-0 flex-col", wordmark === "desktop" ? "hidden sm:flex" : "flex")}>
         <span
           className={cn(
             "font-heading leading-none tracking-tight",

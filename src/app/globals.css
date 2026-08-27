@@ -131,10 +131,15 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     font-family: "Manrope", "Manrope Fallback", ui-sans-serif, system-ui, sans-serif;
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
+    min-width: 0;
     font-family: "Manrope", "Manrope Fallback", ui-sans-serif, system-ui, sans-serif;
   }
   h1,
@@ -154,5 +159,23 @@
   ::selection {
     background: color-mix(in oklch, var(--accent) 28%, white);
     color: var(--ink);
+  }
+}
+
+@layer components {
+  .display-title {
+    font-family: var(--font-heading), "Fraunces Fallback", ui-serif, Georgia, serif;
+    font-size: clamp(2.55rem, 11.5vw, 4.75rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+  }
+
+  .display-title-md {
+    font-family: var(--font-heading), "Fraunces Fallback", ui-serif, Georgia, serif;
+    font-size: clamp(2rem, 7.4vw, 3.35rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
   }
 }
